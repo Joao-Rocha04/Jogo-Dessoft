@@ -1,12 +1,7 @@
 from os import path
 
 # Estabelece a pasta que contem as figuras e sons.
-IMG_enemy1 = path.join(path.dirname(__file__), 'assets', 'img', 'Enemy01')
-IMG_enemy2 = path.join(path.dirname(__file__), 'assets', 'img', 'Enemy02')
-IMG_enemy3 = path.join(path.dirname(__file__), 'assets', 'img', 'Enemy03')
-IMG_enemy4 = path.join(path.dirname(__file__), 'assets', 'img', 'Enemy04')
-IMG_enemy5 = path.join(path.dirname(__file__), 'assets', 'img', 'Enemy05')
-IMG_principal = path.join(path.dirname(__file__), 'assets', 'img', 'principal')
+IMG = path.join(path.dirname(__file__), 'assets', 'img',)
 #SND_DIR = path.join(path.dirname(__file__), 'assets', 'snd')
 #FNT_DIR = path.join(path.dirname(__file__), 'assets', 'font')
 
