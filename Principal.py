@@ -46,9 +46,7 @@ inimigo5 = Inimigo5(groups,assets,player)
 all_sprites.add(inimigo5)
 all_inimigos.add(inimigo5)
 
-groups['all_sprites'] = all_sprites
-groups['all_meteors'] = all_inimigos
-groups['all_tiros'] = all_tiros
+
 # ===== Loop principal =====
 while game:
     clock.tick(30)
@@ -66,7 +64,9 @@ while game:
                 player.speedx += 10
                 ultima_tecla = False
             if event.key == pygame.K_SPACE:
-                player.shoot() 
+                player.shoot()
+            if event.key == pygame.K_UP:
+                player.jump()
         if event.type == pygame.KEYUP:
             # Dependendo da tecla, altera a velocidade.
             if event.key in keys_down and keys_down[event.key]:
@@ -75,13 +75,7 @@ while game:
                 if event.key == pygame.K_RIGHT:
                     player.speedx -= 10
     # ----- Atualiza estado do jogo
-    # Atualizando a posição dos meteoros
-  
-
-
-
-
-
+    hits = pygame.sprite.groupcollide(all_inimigos, all_tiros, True, True, pygame.sprite.collide_mask)
     all_sprites.update()
     window.fill((0,0,0))
     all_sprites.draw(window)

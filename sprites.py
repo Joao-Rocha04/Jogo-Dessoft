@@ -6,18 +6,30 @@ from assets import IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY
 
 posicoes_para_inimigosx = [0,600]
 
+# Define a aceleração da gravidade
+GRAVITY = 2
+# Define a velocidade inicial no pulo
+JUMP_SIZE = 20
+# Define a altura do chão
+GROUND = 600
+
+# Define estados possíveis do jogador
+STILL = 0
+JUMPING = 1
+FALLING = 2
 
 class Principal(pygame.sprite.Sprite):
     def __init__(self, groups, assets):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
-
+        self.state = STILL
         self.image = assets[IMG_PRINCIPAL]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.centerx =  largura/2
         self.rect.bottom = 600
         self.speedx = 0
+        self.speedy = 0
         self.groups = groups
         self.assets = assets
         self.direcx = 0
@@ -42,6 +54,28 @@ class Principal(pygame.sprite.Sprite):
             else:
                 self.direcx = -1
                 self.image = pygame.transform.flip(self.assets[IMG_PRINCIPAL],True,False)
+        self.speedy += GRAVITY
+        # Atualiza o estado para caindo
+        if self.speedy > 0:
+            self.state = FALLING
+        self.rect.y += self.speedy
+        # Se bater no chão, para de cair
+        if self.rect.bottom > GROUND:
+            # Reposiciona para a posição do chão
+            self.rect.bottom = GROUND
+            # Para de cair
+            self.speedy = 0
+            # Atualiza o estado para parado
+            self.state = STILL
+
+    # Método que faz o personagem pular
+    def jump(self):
+        # Só pode pular se ainda não estiver pulando ou caindo
+        if self.state == STILL:
+            self.speedy -= JUMP_SIZE
+            self.state = JUMPING
+
+
     def shoot(self):
         # Verifica se pode atirar
         now = pygame.time.get_ticks()
@@ -73,8 +107,6 @@ class Tiro_Principal(pygame.sprite.Sprite):
         self.speedx = 15 * principal.direcx  # Velocidade fixa para cima
         if self.speedx<0:
             self.image = pygame.transform.flip(assets[IMG_TIRO_PRINCIPAL],True,False)
-            self.mask = pygame.mask.from_surface(self.image)
-            self.rect = self.image.get_rect()
 
 
     def update(self):
@@ -110,13 +142,9 @@ class Inimigo1(pygame.sprite.Sprite):
         if self.principal.rect.centerx > self.rect.centerx:
             self.speedx = 3
             self.image = self.assets[IMG_ENEMY1]
-            self.mask = pygame.mask.from_surface(self.image)
-            self.rect = self.image.get_rect()
         else:
             self.speedx = -3
             self.image = pygame.transform.flip(self.assets[IMG_ENEMY1],True,False)
-            self.mask = pygame.mask.from_surface(self.image)
-            self.rect = self.image.get_rect()
 
         self.rect.x += self.speedx
 
@@ -167,13 +195,11 @@ class Inimigo2(pygame.sprite.Sprite):
         if self.principal.rect.x >= self.rect.centerx:
             self.speedx = 3
             self.image = self.assets[IMG_ENEMY2]
-            self.mask = pygame.mask.from_surface(self.image)
-            self.rect = self.image.get_rect()
+
         else:
             self.speedx = -3
             self.image = pygame.transform.flip(self.assets[IMG_ENEMY2],True,False)
-            self.mask = pygame.mask.from_surface(self.image)
-            self.rect = self.image.get_rect()
+
 
         self.rect.x += self.speedx
 
@@ -207,13 +233,11 @@ class Inimigo3(pygame.sprite.Sprite):
         if self.principal.rect.centerx > self.rect.centerx:
             self.speedx = 3
             self.image = self.assets[IMG_ENEMY3]
-            self.mask = pygame.mask.from_surface(self.image)
-            self.rect = self.image.get_rect()
+
         else:
             self.speedx = -3
             self.image = pygame.transform.flip(self.assets[IMG_ENEMY3],True,False)
-            self.mask = pygame.mask.from_surface(self.image)
-            self.rect = self.image.get_rect()
+
 
         self.rect.x += self.speedx
 
@@ -247,13 +271,11 @@ class Inimigo4(pygame.sprite.Sprite):
         if self.principal.rect.centerx > self.rect.centerx:
             self.speedx = 1.5
             self.image = self.assets[IMG_ENEMY4]
-            self.mask = pygame.mask.from_surface(self.image)
-            self.rect = self.image.get_rect()
+
         else:
             self.speedx = -1.5
             self.image = pygame.transform.flip(self.assets[IMG_ENEMY4],True,False)
-            self.mask = pygame.mask.from_surface(self.image)
-            self.rect = self.image.get_rect()
+
 
         self.rect.x += self.speedx
 
@@ -288,13 +310,11 @@ class Inimigo5(pygame.sprite.Sprite):
         if self.principal.rect.centerx > self.rect.centerx:
             self.speedx = 3
             self.image = self.assets[IMG_ENEMY5]
-            self.mask = pygame.mask.from_surface(self.image)
-            self.rect = self.image.get_rect()
+
         else:
             self.speedx = -3
             self.image = pygame.transform.flip(self.assets[IMG_ENEMY5],True,False)
-            self.mask = pygame.mask.from_surface(self.image)
-            self.rect = self.image.get_rect()
+
 
         self.rect.x += self.speedx
 
