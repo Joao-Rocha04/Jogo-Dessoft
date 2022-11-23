@@ -1,29 +1,58 @@
 import pygame
 from assets import load_assets
+from sprites import Principal, Inimigo1
 pygame.init()
 
 # ----- Gera tela principal
-WIDTH = 500
-HEIGHT = 400
+WIDTH = 600
+HEIGHT = 600
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Hello World!')
-x = load_assets()
 # ----- Inicia estruturas de dados
 game = True
-
+assets = load_assets()
 # ----- Inicia assets
-image = x['img_enemy1']
-
+image = assets['img_enemy1']
+# Criando um grupo de meteoros
+all_sprites = pygame.sprite.Group()
+all_meteors = pygame.sprite.Group()
+all_bullets = pygame.sprite.Group()
+groups = {}
+groups['all_sprites'] = all_sprites
+groups['all_meteors'] = all_meteors
+groups['all_bullets'] = all_bullets
+keys_down = {}
+# Criando o jogador
+player = Principal(groups, assets)
+all_sprites.add(player)
+inimigo = Inimigo1(groups,assets,player)
+all_sprites.add(inimigo)
 # ===== Loop principal =====
 while game:
     # ----- Trata eventos
     for event in pygame.event.get():
-        # ----- Verifica consequências
         if event.type == pygame.QUIT:
             game = False
-
+        if event.type == pygame.KEYDOWN:
+            # Dependendo da tecla, altera a velocidade.
+            keys_down[event.key] = True
+            if event.key == pygame.K_LEFT:
+                player.speedx -= 8
+            if event.key == pygame.K_RIGHT:
+                player.speedx += 8
+        if event.type == pygame.KEYUP:
+            # Dependendo da tecla, altera a velocidade.
+            if event.key in keys_down and keys_down[event.key]:
+                if event.key == pygame.K_LEFT:
+                    player.speedx += 8
+                if event.key == pygame.K_RIGHT:
+                    player.speedx -= 8
+    # ----- Atualiza estado do jogo
+    # Atualizando a posição dos meteoros
+    all_sprites.update()
+    window.fill((0,0,0))
+    all_sprites.draw(window)
     # ----- Gera saídas
-    window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(image, (10, 10))
 
     # ----- Atualiza estado do jogo
