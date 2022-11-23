@@ -1,8 +1,8 @@
 import pygame
 from assets import load_assets
-from sprites import Principal, Inimigo1
+from sprites import Principal, Inimigo1, Inimigo2
 pygame.init()
-
+clock = pygame.time.Clock()
 # ----- Gera tela principal
 WIDTH = 600
 HEIGHT = 600
@@ -25,10 +25,14 @@ keys_down = {}
 # Criando o jogador
 player = Principal(groups, assets)
 all_sprites.add(player)
-inimigo = Inimigo1(groups,assets,player)
-all_sprites.add(inimigo)
+inimigo1 = Inimigo1(groups,assets,player)
+all_sprites.add(inimigo1)
+inimigo2 = Inimigo2(groups,assets,player)
+all_sprites.add(inimigo2)
+
 # ===== Loop principal =====
 while game:
+    clock.tick(30)
     # ----- Trata eventos
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -37,16 +41,16 @@ while game:
             # Dependendo da tecla, altera a velocidade.
             keys_down[event.key] = True
             if event.key == pygame.K_LEFT:
-                player.speedx -= 8
+                player.speedx -= 10
             if event.key == pygame.K_RIGHT:
-                player.speedx += 8
+                player.speedx += 10
         if event.type == pygame.KEYUP:
             # Dependendo da tecla, altera a velocidade.
             if event.key in keys_down and keys_down[event.key]:
                 if event.key == pygame.K_LEFT:
-                    player.speedx += 8
+                    player.speedx += 10
                 if event.key == pygame.K_RIGHT:
-                    player.speedx -= 8
+                    player.speedx -= 10
     # ----- Atualiza estado do jogo
     # Atualizando a posição dos meteoros
     all_sprites.update()
