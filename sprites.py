@@ -1,8 +1,8 @@
 import pygame
 import random
 from config import largura, altura, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
-from assets import IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
-
+from assets import IMG_TIRO_INIMIGO,IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
+import math
 
 posicoes_para_inimigosx = [0,600]
 
@@ -153,7 +153,13 @@ class Inimigo1(pygame.sprite.Sprite):
             self.rect.right = largura
         if self.rect.left < 0:
             self.rect.left = 0
+        now = pygame.time.get_ticks()
+        # Verifica quantos ticks se passaram desde o último tiro.
+        elapsed_ticks = now - self.last_shot
 
+        # Se já pode atirar novamente...
+        if elapsed_ticks > self.shoot_ticks:
+            self.shoot()
     def shoot(self):
         # Verifica se pode atirar
         now = pygame.time.get_ticks()
@@ -165,10 +171,43 @@ class Inimigo1(pygame.sprite.Sprite):
             # Marca o tick da nova imagem.
             self.last_shot = now
             # A nova bala vai ser criada logo acima e no centro horizontal da nave
-            #new_bullet = Bullet(self.assets, self.rect.top, self.rect.centerx)
-            #self.groups['all_sprites'].add(new_bullet)
-            #self.groups['all_bullets'].add(new_bullet)
-            #self.assets[PEW_SOUND].play()
+            novo_tiro_inimigo = Tiro_inimigo(self.assets, self.principal,self,self.groups)
+            self.groups['all_sprites'].add(novo_tiro_inimigo)
+            self.groups['all_tiros_inimigos'].add(novo_tiro_inimigo)
+
+
+class Tiro_inimigo(pygame.sprite.Sprite):
+    # Construtor da classe.
+    def __init__(self, assets, principal,inimigo,groups):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+        self.x = principal.rect.x
+        self.y = principal.rect.y
+        self.image = assets[IMG_TIRO_INIMIGO]
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.principal = principal
+        self.inimigo = inimigo
+        # Coloca no lugar inicial definido em x, y do constutor
+        self.ball_speed_x = 0
+        self.ball_speed_y = 0
+        #Posição inicial da bola
+        self.ball_x = self.inimigo.rect.x
+        self.ball_y = self.inimigo.rect.y
+        self.ACELERACAO = .5
+        self.groups = groups
+    def update(self):
+        angulo = math.atan((self.ball_y - self.y) / (self.ball_x - self.x))
+        forca = 20
+        ball_speed_x = math.cos(angulo) * forca
+        ball_speed_y = math.sin(angulo) * forca
+        self.rect.centerx += ball_speed_x
+        self.rect.centery += ball_speed_y
+        if self.rect.x > 600 or self.rect.x<0 or self.rect.y>600 or self.rect.y<0:
+            self.kill()
+
+
+
 
 
 class Inimigo2(pygame.sprite.Sprite):

@@ -9,6 +9,7 @@ IMG_ENEMY4 = 'img_enemy4'
 IMG_ENEMY5 = 'img_enemy5'
 IMG_PRINCIPAL = 'img_principal'
 IMG_TIRO_PRINCIPAL = 'img_tiro_principal'
+IMG_TIRO_INIMIGO = 'img_tiro_inimigo'
 
 
 def load_image(filename):
@@ -33,5 +34,7 @@ def load_assets():
     assets['img_principal'] = convert_alpha_image('principal','PNG','Idle, run, jump', 'idle01.png')
     assets['img_principal'] = pygame.transform.scale(assets['img_principal'], (largura_principal, altura_principal))
     assets['img_tiro_principal'] = convert_alpha_image('principal','PNG','Throw attack', 'throw_dagger.png')
-    assets['img_tiro_principal'] = pygame.transform.scale(assets['img_tiro_principal'], (70,50))
+    assets['img_tiro_principal'] = pygame.transform.scale(assets['img_tiro_principal'], (40,40))
+    assets['img_tiro_inimigo'] = convert_alpha_image('Enemy01','attack03.png')
+    assets['img_tiro_inimigo'] = pygame.transform.scale(assets['img_tiro_inimigo'],(30,30))
     return assets

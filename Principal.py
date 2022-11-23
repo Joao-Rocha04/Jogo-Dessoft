@@ -17,10 +17,12 @@ image = assets['img_enemy1']
 all_sprites = pygame.sprite.Group()
 all_inimigos = pygame.sprite.Group()
 all_tiros = pygame.sprite.Group()
+all_tiros_inimigos = pygame.sprite.Group()
 groups = {}
 groups['all_sprites'] = all_sprites
 groups['all_meteors'] = all_inimigos
 groups['all_tiros'] = all_tiros
+groups['all_tiros_inimigos'] = all_tiros_inimigos
 keys_down = {}
 # Criando o jogador
 player = Principal(groups, assets)
