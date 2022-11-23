@@ -38,8 +38,10 @@ class Principal(pygame.sprite.Sprite):
         if self.speedx != 0:
             if self.speedx>0:
                 self.direcx = 1
+                self.image = self.assets[IMG_PRINCIPAL]
             else:
                 self.direcx = -1
+                self.image = pygame.transform.flip(self.assets[IMG_PRINCIPAL],True,False)
     def shoot(self):
         # Verifica se pode atirar
         now = pygame.time.get_ticks()
@@ -53,7 +55,7 @@ class Principal(pygame.sprite.Sprite):
             #A nova bala vai ser criada logo acima e no centro horizontal da nave
             new_bullet = Tiro_Principal(self.assets, self)
             self.groups['all_sprites'].add(new_bullet)
-            self.groups['all_bullets'].add(new_bullet)
+            self.groups['all_tiros'].add(new_bullet)
 
 class Tiro_Principal(pygame.sprite.Sprite):
     # Construtor da classe.
@@ -69,6 +71,11 @@ class Tiro_Principal(pygame.sprite.Sprite):
         self.rect.centerx = principal.rect.centerx
         self.rect.centery = principal.rect.centery
         self.speedx = 15 * principal.direcx  # Velocidade fixa para cima
+        if self.speedx<0:
+            self.image = pygame.transform.flip(assets[IMG_TIRO_PRINCIPAL],True,False)
+            self.mask = pygame.mask.from_surface(self.image)
+            self.rect = self.image.get_rect()
+
 
     def update(self):
         # A bala só se move no eixo y
@@ -96,14 +103,20 @@ class Inimigo1(pygame.sprite.Sprite):
         self.principal = principal
         # Só será possível atirar uma vez a cada 500 milissegundos
         self.last_shot = pygame.time.get_ticks()
-        self.shoot_ticks = 500
+        self.shoot_ticks = 2000
 
     def update(self):
         # Atualização da posição da nave
-        if self.principal.rect.centerx > self.rect.x:
+        if self.principal.rect.centerx > self.rect.centerx:
             self.speedx = 3
+            self.image = self.assets[IMG_ENEMY1]
+            self.mask = pygame.mask.from_surface(self.image)
+            self.rect = self.image.get_rect()
         else:
             self.speedx = -3
+            self.image = pygame.transform.flip(self.assets[IMG_ENEMY1],True,False)
+            self.mask = pygame.mask.from_surface(self.image)
+            self.rect = self.image.get_rect()
 
         self.rect.x += self.speedx
 
@@ -147,14 +160,20 @@ class Inimigo2(pygame.sprite.Sprite):
         self.principal = principal
         # Só será possível atirar uma vez a cada 500 milissegundos
         self.last_shot = pygame.time.get_ticks()
-        self.shoot_ticks = 500
+        self.shoot_ticks = 600
 
     def update(self):
         # Atualização da posição da nave
-        if self.principal.rect.x >= self.rect.x:
+        if self.principal.rect.x >= self.rect.centerx:
             self.speedx = 3
+            self.image = self.assets[IMG_ENEMY2]
+            self.mask = pygame.mask.from_surface(self.image)
+            self.rect = self.image.get_rect()
         else:
             self.speedx = -3
+            self.image = pygame.transform.flip(self.assets[IMG_ENEMY2],True,False)
+            self.mask = pygame.mask.from_surface(self.image)
+            self.rect = self.image.get_rect()
 
         self.rect.x += self.speedx
 
@@ -164,18 +183,123 @@ class Inimigo2(pygame.sprite.Sprite):
         if self.rect.left < 0:
             self.rect.left = 0
 
-    def shoot(self):
-        # Verifica se pode atirar
-        now = pygame.time.get_ticks()
-        # Verifica quantos ticks se passaram desde o último tiro.
-        elapsed_ticks = now - self.last_shot
+class Inimigo3(pygame.sprite.Sprite):
+    def __init__(self, groups, assets,principal):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
 
-        # Se já pode atirar novamente...
-        if elapsed_ticks > self.shoot_ticks:
-            # Marca o tick da nova imagem.
-            self.last_shot = now
-            # A nova bala vai ser criada logo acima e no centro horizontal da nave
-            #new_bullet = Bullet(self.assets, self.rect.top, self.rect.centerx)
-            #self.groups['all_sprites'].add(new_bullet)
-            #self.groups['all_bullets'].add(new_bullet)
-            #self.assets[PEW_SOUND].play()
+        self.image = assets[IMG_ENEMY3]
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.centerx = 600
+        self.rect.bottom = 600
+        self.speedx = 0
+        self.groups = groups
+        self.assets = assets
+
+        self.principal = principal
+        # Só será possível atirar uma vez a cada 500 milissegundos
+        self.last_shot = pygame.time.get_ticks()
+        self.shoot_ticks = 2000
+
+    def update(self):
+        # Atualização da posição da nave
+        if self.principal.rect.centerx > self.rect.centerx:
+            self.speedx = 3
+            self.image = self.assets[IMG_ENEMY3]
+            self.mask = pygame.mask.from_surface(self.image)
+            self.rect = self.image.get_rect()
+        else:
+            self.speedx = -3
+            self.image = pygame.transform.flip(self.assets[IMG_ENEMY3],True,False)
+            self.mask = pygame.mask.from_surface(self.image)
+            self.rect = self.image.get_rect()
+
+        self.rect.x += self.speedx
+
+        # Mantem dentro da tela
+        if self.rect.right > largura:
+            self.rect.right = largura
+        if self.rect.left < 0:
+            self.rect.left = 0
+
+class Inimigo4(pygame.sprite.Sprite):
+    def __init__(self, groups, assets,principal):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = assets[IMG_ENEMY4]
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.centerx = 0
+        self.rect.bottom = 600
+        self.speedx = 0
+        self.groups = groups
+        self.assets = assets
+
+        self.principal = principal
+        # Só será possível atirar uma vez a cada 500 milissegundos
+        self.last_shot = pygame.time.get_ticks()
+        self.shoot_ticks = 2000
+
+    def update(self):
+        # Atualização da posição da nave
+        if self.principal.rect.centerx > self.rect.centerx:
+            self.speedx = 1.5
+            self.image = self.assets[IMG_ENEMY4]
+            self.mask = pygame.mask.from_surface(self.image)
+            self.rect = self.image.get_rect()
+        else:
+            self.speedx = -1.5
+            self.image = pygame.transform.flip(self.assets[IMG_ENEMY4],True,False)
+            self.mask = pygame.mask.from_surface(self.image)
+            self.rect = self.image.get_rect()
+
+        self.rect.x += self.speedx
+
+        # Mantem dentro da tela
+        if self.rect.right > largura:
+            self.rect.right = largura
+        if self.rect.left < 0:
+            self.rect.left = 0
+
+
+class Inimigo5(pygame.sprite.Sprite):
+    def __init__(self, groups, assets,principal):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = assets[IMG_ENEMY5]
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.rect.centerx = 0
+        self.rect.bottom = 600
+        self.speedx = 0
+        self.groups = groups
+        self.assets = assets
+
+        self.principal = principal
+        # Só será possível atirar uma vez a cada 500 milissegundos
+        self.last_shot = pygame.time.get_ticks()
+        self.shoot_ticks = 2000
+
+    def update(self):
+        # Atualização da posição da nave
+        if self.principal.rect.centerx > self.rect.centerx:
+            self.speedx = 3
+            self.image = self.assets[IMG_ENEMY5]
+            self.mask = pygame.mask.from_surface(self.image)
+            self.rect = self.image.get_rect()
+        else:
+            self.speedx = -3
+            self.image = pygame.transform.flip(self.assets[IMG_ENEMY5],True,False)
+            self.mask = pygame.mask.from_surface(self.image)
+            self.rect = self.image.get_rect()
+
+        self.rect.x += self.speedx
+
+        # Mantem dentro da tela
+        if self.rect.right > largura:
+            self.rect.right = largura
+        if self.rect.left < 0:
+            self.rect.left = 0

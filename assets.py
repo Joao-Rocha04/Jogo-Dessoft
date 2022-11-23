@@ -33,5 +33,5 @@ def load_assets():
     assets['img_principal'] = convert_alpha_image('principal','PNG','Idle, run, jump', 'idle01.png')
     assets['img_principal'] = pygame.transform.scale(assets['img_principal'], (largura_principal, altura_principal))
     assets['img_tiro_principal'] = convert_alpha_image('principal','PNG','Throw attack', 'throw_dagger.png')
-    assets['img_tiro_principal'] = pygame.transform.scale(assets['img_tiro_principal'], (100,100))
+    assets['img_tiro_principal'] = pygame.transform.scale(assets['img_tiro_principal'], (70,50))
     return assets

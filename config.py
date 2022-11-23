@@ -15,20 +15,20 @@ fps = 60 # Frames por segundo
 largura_inimigo1 = 50
 altura_inimigo1 = 50
 
-largura_inimigo2 = 20
-altura_inimigo2 = 35
+largura_inimigo2 = 40
+altura_inimigo2 = 50
 
-largura_inimigo3 = 30
-altura_inimigo3 = 50
+largura_inimigo3 = 100
+altura_inimigo3 = 110
 
-largura_inimigo4 = 30
-altura_inimigo4 = 50
+largura_inimigo4 = 95
+altura_inimigo4 = 90
 
-largura_inimigo5 = 35
-altura_inimigo5 = 60
+largura_inimigo5 = 100
+altura_inimigo5 = 80
 
-largura_principal = 100
-altura_principal = 100
+largura_principal = 80
+altura_principal = 80
 
 # Define algumas variáveis com as cores básicas
 branco = (255, 255, 255)
