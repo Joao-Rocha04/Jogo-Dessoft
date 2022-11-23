@@ -1,7 +1,7 @@
 import pygame
 import random
 from config import largura, altura, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
-from assets import IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
+from assets import IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
 
 
 posicoes_para_inimigosx = [0,600]
@@ -20,7 +20,8 @@ class Principal(pygame.sprite.Sprite):
         self.speedx = 0
         self.groups = groups
         self.assets = assets
-
+        self.direcx = 0
+        self.direcy = 0
         # Só será possível atirar uma vez a cada 500 milissegundos
         self.last_shot = pygame.time.get_ticks()
         self.shoot_ticks = 1000
@@ -34,7 +35,11 @@ class Principal(pygame.sprite.Sprite):
             self.rect.right = largura
         if self.rect.left < 0:
             self.rect.left = 0
-
+        if self.speedx != 0:
+            if self.speedx>0:
+                self.direcx = 1
+            else:
+                self.direcx = -1
     def shoot(self):
         # Verifica se pode atirar
         now = pygame.time.get_ticks()
@@ -45,11 +50,33 @@ class Principal(pygame.sprite.Sprite):
         if elapsed_ticks > self.shoot_ticks:
             # Marca o tick da nova imagem.
             self.last_shot = now
-            # A nova bala vai ser criada logo acima e no centro horizontal da nave
-            #new_bullet = Bullet(self.assets, self.rect.top, self.rect.centerx)
-            #self.groups['all_sprites'].add(new_bullet)
-            #self.groups['all_bullets'].add(new_bullet)
+            #A nova bala vai ser criada logo acima e no centro horizontal da nave
+            new_bullet = Tiro_Principal(self.assets, self)
+            self.groups['all_sprites'].add(new_bullet)
+            self.groups['all_bullets'].add(new_bullet)
 
+class Tiro_Principal(pygame.sprite.Sprite):
+    # Construtor da classe.
+    def __init__(self, assets, principal):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = assets[IMG_TIRO_PRINCIPAL]
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.principal = principal
+        # Coloca no lugar inicial definido em x, y do constutor
+        self.rect.centerx = principal.rect.centerx
+        self.rect.centery = principal.rect.centery
+        self.speedx = 15 * principal.direcx  # Velocidade fixa para cima
+
+    def update(self):
+        # A bala só se move no eixo y
+        self.rect.x += self.speedx
+
+        # Se o tiro passar do inicio da tela, morre.
+        if self.rect.x < 0 or self.rect.x > 600:
+            self.kill()
 
 
 class Inimigo1(pygame.sprite.Sprite):
@@ -124,7 +151,7 @@ class Inimigo2(pygame.sprite.Sprite):
 
     def update(self):
         # Atualização da posição da nave
-        if self.principal.rect.centerx > self.rect.x:
+        if self.principal.rect.x >= self.rect.x:
             self.speedx = 3
         else:
             self.speedx = -3

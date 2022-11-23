@@ -29,7 +29,6 @@ inimigo1 = Inimigo1(groups,assets,player)
 all_sprites.add(inimigo1)
 inimigo2 = Inimigo2(groups,assets,player)
 all_sprites.add(inimigo2)
-
 # ===== Loop principal =====
 while game:
     clock.tick(30)
@@ -42,8 +41,12 @@ while game:
             keys_down[event.key] = True
             if event.key == pygame.K_LEFT:
                 player.speedx -= 10
+                ultima_tecla = True
             if event.key == pygame.K_RIGHT:
                 player.speedx += 10
+                ultima_tecla = False
+            if event.key == pygame.K_SPACE:
+                player.shoot() 
         if event.type == pygame.KEYUP:
             # Dependendo da tecla, altera a velocidade.
             if event.key in keys_down and keys_down[event.key]:
