@@ -47,7 +47,6 @@ inimigo5 = Inimigo5(groups,assets,player)
 all_sprites.add(inimigo5)
 all_inimigos.add(inimigo5)
 
-
 # ===== Loop principal =====
 while game:
     clock.tick(30)
