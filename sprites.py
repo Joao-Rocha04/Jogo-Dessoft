@@ -181,8 +181,8 @@ class Tiro_inimigo(pygame.sprite.Sprite):
     def __init__(self, assets, principal,inimigo,groups):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
-        self.x = principal.rect.x
-        self.y = principal.rect.y
+        self.x = principal.rect.centerx
+        self.y = principal.rect.centery
         self.image = assets[IMG_TIRO_INIMIGO]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
@@ -192,8 +192,8 @@ class Tiro_inimigo(pygame.sprite.Sprite):
         self.ball_speed_x = 0
         self.ball_speed_y = 0
         #Posição inicial da bola
-        self.ball_x = self.inimigo.rect.x
-        self.ball_y = self.inimigo.rect.y
+        self.ball_x = inimigo.rect.x
+        self.ball_y = inimigo.rect.y
         self.ACELERACAO = .5
         self.groups = groups
     def update(self):

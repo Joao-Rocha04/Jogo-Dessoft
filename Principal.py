@@ -12,7 +12,6 @@ pygame.display.set_caption('Hello World!')
 game = True
 assets = load_assets()
 # ----- Inicia assets
-image = assets['img_enemy1']
 # Criando um grupo de meteoros
 all_sprites = pygame.sprite.Group()
 all_inimigos = pygame.sprite.Group()
@@ -82,7 +81,7 @@ while game:
     window.fill((0,0,0))
     all_sprites.draw(window)
     # ----- Gera saídas
-    window.blit(image, (10, 10))
+
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
