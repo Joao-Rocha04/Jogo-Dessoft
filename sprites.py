@@ -1,7 +1,7 @@
 import pygame
 import random
 from config import largura, altura, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
-from assets import VOO_INIMIGO1,SCORE_FONT,IMG_TIRO_INIMIGO,IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
+from assets import WALK_INIMIGO5,WALK_INIMIGO4,WALK_INIMIGO3,WALK_INIMIGO2,HIT_INIMIGO1,VOO_INIMIGO1,SCORE_FONT,IMG_TIRO_INIMIGO,IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
 import math
 
 posicoes_para_inimigosx = [0,1000]
@@ -36,7 +36,7 @@ class Principal(pygame.sprite.Sprite):
         self.direcy = 0
         # Só será possível atirar uma vez a cada 500 milissegundos
         self.last_shot = pygame.time.get_ticks()
-        self.shoot_ticks = 1000
+        self.shoot_ticks = 500
         self.lifes = 3
         self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
         self.text_rect = self.text_surface.get_rect()
@@ -127,8 +127,10 @@ class Inimigo1(pygame.sprite.Sprite):
     def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
+        self.hit1 = False
         self.atual = 0
         self.sprite = assets[VOO_INIMIGO1]
+        self.spritehit1 = assets[HIT_INIMIGO1]
         self.image = self.sprite[self.atual]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
@@ -146,16 +148,22 @@ class Inimigo1(pygame.sprite.Sprite):
         self.text_rect = self.text_surface.get_rect()
         self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
     def update(self):
-        self.atual+= 0.01
+        self.atual= self.atual + 0.3
         if self.atual>= len(self.sprite): 
             self.atual = 0
         self.image = self.sprite[int(self.atual)]
-        # Atualização da posição da nave
+
         if self.principal.rect.centerx > self.rect.centerx:
+            self.image = self.sprite[int(self.atual)]
             self.speedx = 3
         else:
             self.speedx = -3
+            self.image = self.sprite[int(self.atual)]
             self.image = pygame.transform.flip(self.image,True,False)
+        if self.hit1 == True:
+            self.atual = 0
+            self.atual+=0.3
+            self.image = self.spritehit1[int(self.atual)]
 
         self.rect.x += self.speedx
 
@@ -231,8 +239,9 @@ class Inimigo2(pygame.sprite.Sprite):
     def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
-
-        self.image = assets[IMG_ENEMY2]
+        self.atual = 0
+        self.sprite = assets[WALK_INIMIGO2]
+        self.image = self.sprite[self.atual]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.centerx = random.choice(posicoes_para_inimigosx)
@@ -250,14 +259,17 @@ class Inimigo2(pygame.sprite.Sprite):
         self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
     def update(self):
         # Atualização da posição da nave
+        self.atual= self.atual + 0.3
+        if self.atual>= len(self.sprite): 
+            self.atual = 0
+        self.image = self.sprite[int(self.atual)]
         if self.principal.rect.x >= self.rect.centerx:
             self.speedx = 5
-            self.image = self.assets[IMG_ENEMY2]
-
+            self.image = self.sprite[int(self.atual)]
         else:
             self.speedx = -5
-            self.image = pygame.transform.flip(self.assets[IMG_ENEMY2],True,False)
-
+            self.image = self.sprite[int(self.atual)]
+            self.image = pygame.transform.flip(self.image,True,False)
 
         self.rect.x += self.speedx
         self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
@@ -274,7 +286,9 @@ class Inimigo3(pygame.sprite.Sprite):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = assets[IMG_ENEMY3]
+        self.atual = 0
+        self.sprite = assets[WALK_INIMIGO3]
+        self.image = self.sprite[self.atual]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.centerx = random.choice(posicoes_para_inimigosx)
@@ -295,13 +309,18 @@ class Inimigo3(pygame.sprite.Sprite):
         self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
         self.text_rect = self.text_surface.get_rect()
         self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
+        self.atual= self.atual + 0.3
+        if self.atual>= len(self.sprite): 
+            self.atual = 0
+        self.image = self.sprite[int(self.atual)]
         if self.principal.rect.centerx > self.rect.centerx:
             self.speedx = 3
-            self.image = self.assets[IMG_ENEMY3]
+            self.image = self.sprite[int(self.atual)]
 
         else:
             self.speedx = -3
-            self.image = pygame.transform.flip(self.assets[IMG_ENEMY3],True,False)
+            self.image = self.sprite[int(self.atual)]
+            self.image = pygame.transform.flip(self.image,True,False)
 
 
         self.rect.x += self.speedx
@@ -317,7 +336,9 @@ class Inimigo4(pygame.sprite.Sprite):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = assets[IMG_ENEMY4]
+        self.atual = 0
+        self.sprite = assets[WALK_INIMIGO4]
+        self.image = self.sprite[self.atual]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.centerx = random.choice(posicoes_para_inimigosx)
@@ -335,13 +356,17 @@ class Inimigo4(pygame.sprite.Sprite):
         self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
     def update(self):
         # Atualização da posição da nave
+        if self.atual>= len(self.sprite): 
+            self.atual = 0
+        self.image = self.sprite[int(self.atual)]
         if self.principal.rect.centerx > self.rect.centerx:
             self.speedx = 2
-            self.image = self.assets[IMG_ENEMY4]
+            self.image = self.sprite[int(self.atual)]
 
         else:
             self.speedx = -2
-            self.image = pygame.transform.flip(self.assets[IMG_ENEMY4],True,False)
+            self.image = self.sprite[int(self.atual)]
+            self.image = pygame.transform.flip(self.image,True,False)
 
         self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
         self.text_rect = self.text_surface.get_rect()
@@ -360,7 +385,9 @@ class Inimigo5(pygame.sprite.Sprite):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = assets[IMG_ENEMY5]
+        self.atual = 0
+        self.sprite = assets[WALK_INIMIGO5]
+        self.image = self.sprite[self.atual]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.centerx = random.choice(posicoes_para_inimigosx)
@@ -378,13 +405,17 @@ class Inimigo5(pygame.sprite.Sprite):
         self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
     def update(self):
         # Atualização da posição da nave
+        if self.atual>= len(self.sprite): 
+            self.atual = 0
+        self.image = self.sprite[int(self.atual)]
         if self.principal.rect.centerx > self.rect.centerx:
             self.speedx = 3
-            self.image = self.assets[IMG_ENEMY5]
+            self.image = self.sprite[int(self.atual)]
 
         else:
             self.speedx = -3
-            self.image = pygame.transform.flip(self.assets[IMG_ENEMY5],True,False)
+            self.image = self.sprite[int(self.atual)]
+            self.image = pygame.transform.flip(self.image,True,False)
 
 
         self.rect.x += self.speedx

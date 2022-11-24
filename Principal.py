@@ -84,6 +84,8 @@ while game:
         inimigo.lifes -=1
         if inimigo.lifes == 0:
             inimigo.kill()
+        if inimigo == Inimigo1:
+            inimigo.hit1 = True
     hit_principal = pygame.sprite.spritecollide(player,all_tiros_inimigos,True)
     if len(hit_principal)>0:
         player.lifes = player.lifes - len(hit_principal)

@@ -13,6 +13,15 @@ IMG_TIRO_INIMIGO = 'img_tiro_inimigo'
 SCORE_FONT = 'score_font'
 BACKGROUND = 'background'
 VOO_INIMIGO1 = 'voo_inimigo1'
+HIT_INIMIGO1 = 'hit_inimigo1'
+ATTACK_INIMIGO2 = 'attack_inimigo2'
+HIT_INIMIGO2 = 'hit_inimigo2'
+WALK_INIMIGO2 = 'walk_inimigo2'
+WALK_INIMIGO3 = 'walk_inimigo3'
+WALK_INIMIGO4 = 'walk_inimigo4'
+WALK_INIMIGO5 = 'walk_inimigo5'
+
+
 def load_image(filename):
     return pygame.image.load(os.path.join(IMG, *filename))
 def convert_alpha_image(*filename):
@@ -52,4 +61,46 @@ def load_assets():
         img = pygame.transform.scale(img,(largura_inimigo1,altura_inimigo1))
         voo_inimigo1.append(img)
     assets[VOO_INIMIGO1] = voo_inimigo1
+    hit_inimigo1 = []
+    for i in range(1,3):
+        img = convert_alpha_image('Enemy01',f'hit0{i}.png')
+        img = pygame.transform.scale(img,(largura_inimigo1,altura_inimigo1))
+        hit_inimigo1.append(img)
+    assets[HIT_INIMIGO1] = hit_inimigo1
+    attack_inimigo2 = []
+    for i in range(1,8):
+        img = convert_alpha_image('Enemy02',f'attack0{i}.png')
+        img = pygame.transform.scale(img,(largura_inimigo2,altura_inimigo2))
+        attack_inimigo2.append(img)
+    assets[ATTACK_INIMIGO2] = attack_inimigo2
+    hit_inimigo2 = []
+    for i in range(1,3):
+        img = convert_alpha_image('Enemy02',f'hit0{i}.png')
+        img = pygame.transform.scale(img,(largura_inimigo2,altura_inimigo2))
+        hit_inimigo2.append(img)
+    assets[HIT_INIMIGO2] = hit_inimigo2
+    walk_inimigo3 = []
+    for i in range(1,8):
+        img = convert_alpha_image('Enemy03',f'idle0{i}.png')
+        img = pygame.transform.scale(img,(largura_inimigo3,altura_inimigo3))
+        walk_inimigo3.append(img)
+    assets[WALK_INIMIGO3] = walk_inimigo3
+    walk_inimigo4 = []
+    for i in range(1,7):
+        img = convert_alpha_image('Enemy04',f'idle0{i}.png')
+        img = pygame.transform.scale(img,(largura_inimigo4,altura_inimigo4))
+        walk_inimigo4.append(img)
+    assets[WALK_INIMIGO4] = walk_inimigo4
+    walk_inimigo5 = []
+    for i in range(1,9):
+        img = convert_alpha_image('Enemy05',f'idle0{i}.png')
+        img = pygame.transform.scale(img,(largura_inimigo5,altura_inimigo5))
+        walk_inimigo5.append(img)
+    assets[WALK_INIMIGO5] = walk_inimigo5
+    walk_inimigo2 = []
+    for i in range(1,8):
+        img = convert_alpha_image('Enemy02',f'walk0{i}.png')
+        img = pygame.transform.scale(img,(largura_inimigo2,altura_inimigo2))
+        walk_inimigo2.append(img)
+    assets[WALK_INIMIGO2] = walk_inimigo2
     return assets
