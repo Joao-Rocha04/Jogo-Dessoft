@@ -1,6 +1,7 @@
 import pygame
 from assets import load_assets
 from sprites import Principal, Inimigo1, Inimigo2, Inimigo3, Inimigo4, Inimigo5
+import random
 pygame.init()
 clock = pygame.time.Clock()
 # ----- Gera tela principal
@@ -76,6 +77,28 @@ while game:
                     player.speedx -= 10
     # ----- Atualiza estado do jogo
     hits = pygame.sprite.groupcollide(all_inimigos, all_tiros, True, True, pygame.sprite.collide_mask)
+    for inimigo in hits:
+        i = random.randint(1,5)
+        if i == 1:
+            inimigo1 = Inimigo1(groups,assets,player)
+            all_sprites.add(inimigo1)
+            all_inimigos.add(inimigo1)
+        elif i ==2:
+            inimigo2 = Inimigo2(groups,assets,player)
+            all_sprites.add(inimigo2)
+            all_inimigos.add(inimigo2)
+        elif i == 3:
+            inimigo3 = Inimigo3(groups,assets,player)
+            all_sprites.add(inimigo3)
+            all_inimigos.add(inimigo3)
+        elif i ==4:
+            inimigo4 = Inimigo4(groups,assets,player)
+            all_sprites.add(inimigo4)
+            all_inimigos.add(inimigo4)
+        elif i ==5:
+            inimigo5 = Inimigo5(groups,assets,player)
+            all_sprites.add(inimigo5)
+            all_inimigos.add(inimigo5)
     all_sprites.update()
     window.fill((0,0,0))
     all_sprites.draw(window)

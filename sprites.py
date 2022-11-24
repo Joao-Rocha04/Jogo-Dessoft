@@ -126,7 +126,7 @@ class Inimigo1(pygame.sprite.Sprite):
         self.image = assets[IMG_ENEMY1]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.centerx = 0
+        self.rect.centerx = random.choice(posicoes_para_inimigosx)
         self.rect.bottom = 500
         self.speedx = 0
         self.groups = groups
@@ -218,7 +218,7 @@ class Inimigo2(pygame.sprite.Sprite):
         self.image = assets[IMG_ENEMY2]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.centerx = 0
+        self.rect.centerx = random.choice(posicoes_para_inimigosx)
         self.rect.bottom = 600
         self.speedx = 0
         self.groups = groups
@@ -232,11 +232,11 @@ class Inimigo2(pygame.sprite.Sprite):
     def update(self):
         # Atualização da posição da nave
         if self.principal.rect.x >= self.rect.centerx:
-            self.speedx = 3
+            self.speedx = 5
             self.image = self.assets[IMG_ENEMY2]
 
         else:
-            self.speedx = -3
+            self.speedx = -5
             self.image = pygame.transform.flip(self.assets[IMG_ENEMY2],True,False)
 
 
@@ -256,7 +256,7 @@ class Inimigo3(pygame.sprite.Sprite):
         self.image = assets[IMG_ENEMY3]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.centerx = 600
+        self.rect.centerx = random.choice(posicoes_para_inimigosx)
         self.rect.bottom = 600
         self.speedx = 0
         self.groups = groups
@@ -294,7 +294,7 @@ class Inimigo4(pygame.sprite.Sprite):
         self.image = assets[IMG_ENEMY4]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.centerx = 0
+        self.rect.centerx = random.choice(posicoes_para_inimigosx)
         self.rect.bottom = 600
         self.speedx = 0
         self.groups = groups
@@ -308,11 +308,11 @@ class Inimigo4(pygame.sprite.Sprite):
     def update(self):
         # Atualização da posição da nave
         if self.principal.rect.centerx > self.rect.centerx:
-            self.speedx = 1.5
+            self.speedx = 2
             self.image = self.assets[IMG_ENEMY4]
 
         else:
-            self.speedx = -1.5
+            self.speedx = -2
             self.image = pygame.transform.flip(self.assets[IMG_ENEMY4],True,False)
 
 
@@ -333,7 +333,7 @@ class Inimigo5(pygame.sprite.Sprite):
         self.image = assets[IMG_ENEMY5]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
-        self.rect.centerx = 0
+        self.rect.centerx = random.choice(posicoes_para_inimigosx)
         self.rect.bottom = 600
         self.speedx = 0
         self.groups = groups
