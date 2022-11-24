@@ -84,7 +84,12 @@ while game:
         inimigo.lifes -=1
         if inimigo.lifes == 0:
             inimigo.kill()
-
+    hit_principal = pygame.sprite.spritecollide(player,all_tiros_inimigos,True)
+    if len(hit_principal)>0:
+        player.lifes = player.lifes - len(hit_principal)
+        if player.lifes == 0:
+            player.kill()
+            pygame.quit()
 
     if  int(pygame.time.get_ticks()) % 100 == 0:
         i = random.randint(1,5)
@@ -111,6 +116,7 @@ while game:
     all_personagens.add(all_inimigos)
     all_sprites.update()
     window.fill((0,0,0))
+    window.blit(assets['background'], (0, 0))
     all_sprites.draw(window)
     for sprite in all_personagens:
         window.blit(sprite.text_surface, sprite.text_rect)
