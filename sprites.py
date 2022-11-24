@@ -48,8 +48,8 @@ class Principal(pygame.sprite.Sprite):
     def update(self):
         if self.ataque == True:
             self.sprite = self.assets[ANIM_ATAQUE_PRINCIPAL]
-            self.atual = 0
             if self.atual>= len(self.sprite):
+                self.sprite = self.assets[WALK_PRINCIPAL]
                 self.ataque = False
             if self.direita == True:
                 self.image = self.sprite[int(self.atual)]
