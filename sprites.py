@@ -46,65 +46,65 @@ class Principal(pygame.sprite.Sprite):
         self.direita = True
         self.ataque = False
     def update(self):
-        self.sprite = self.assets[WALK_PRINCIPAL]
-        # Atualização da posição da nave
-        self.atual= self.atual + 0.3
-        if self.atual>= len(self.sprite): 
-            self.atual = 0
-        # Mantem dentro da tela
-        if self.rect.right > largura:
-            self.rect.right = largura
-        if self.rect.left < 0:
-            self.rect.left = 0
-        if self.speedx != 0:
-            if self.speedx>0:
-                self.direcx = 1
-                self.image = self.sprite[int(self.atual)]
-                self.direita = True
-            else:
-                self.direcx = -1
-                self.image = self.sprite[int(self.atual)]
-                self.image = pygame.transform.flip(self.image,True,False)
-                self.direita = False
-        else:
-            self.image = self.assets[IMG_PRINCIPAL]
-            if self.direita== True:
-                self.image = self.assets[IMG_PRINCIPAL]
-            else:
-                self.image = pygame.transform.flip(self.image,True,False)
         if self.ataque == True:
             self.sprite = self.assets[ANIM_ATAQUE_PRINCIPAL]
             self.atual = 0
-            while self.atual<=6:
-                if self.direita == True:
+            if self.atual>= len(self.sprite):
+                self.ataque = False
+            if self.direita == True:
+                self.image = self.sprite[int(self.atual)]
+            else:
+                self.image = self.sprite[int(self.atual)]
+                self.image = pygame.transform.flip(self.image,True,False)
+            self.atual+=0.3
+        else:
+            self.sprite = self.assets[WALK_PRINCIPAL]
+            # Atualização da posição da nave
+            self.atual= self.atual + 0.3
+            if self.atual>= len(self.sprite): 
+                self.atual = 0
+            # Mantem dentro da tela
+            if self.rect.right > largura:
+                self.rect.right = largura
+            if self.rect.left < 0:
+                self.rect.left = 0
+            if self.speedx != 0:
+                if self.speedx>0:
+                    self.direcx = 1
                     self.image = self.sprite[int(self.atual)]
-                    self.atual +=0.1
+                    self.direita = True
                 else:
+                    self.direcx = -1
                     self.image = self.sprite[int(self.atual)]
                     self.image = pygame.transform.flip(self.image,True,False)
-                    self.atual+=0.1
-            self.ataque = False
-            self.atual = 0
-        self.speedy += GRAVITY
-        # Atualiza o estado para caindo
-        if self.speedy > 0:
-            self.state = FALLING
-        self.rect.y += self.speedy
-        # Se bater no chão, para de cair
-        if self.rect.bottom > GROUND:
-            # Reposiciona para a posição do chão
-            self.rect.bottom = GROUND
-            # Para de cair
-            self.speedy = 0
-            # Atualiza o estado para parado
-            self.state = STILL
-        self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
-        self.text_rect = self.text_surface.get_rect()
-        self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
-        self.rect.x += self.speedx
-    # Método que faz o personagem pular
+                    self.direita = False
+            else:
+                self.image = self.assets[IMG_PRINCIPAL]
+                if self.direita== True:
+                    self.image = self.assets[IMG_PRINCIPAL]
+                else:
+                    self.image = pygame.transform.flip(self.image,True,False)
+            
+            self.speedy += GRAVITY
+            # Atualiza o estado para caindo
+            if self.speedy > 0:
+                self.state = FALLING
+            self.rect.y += self.speedy
+            # Se bater no chão, para de cair
+            if self.rect.bottom > GROUND:
+                # Reposiciona para a posição do chão
+                self.rect.bottom = GROUND
+                # Para de cair
+                self.speedy = 0
+                # Atualiza o estado para parado
+                self.state = STILL
+            self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
+            self.text_rect = self.text_surface.get_rect()
+            self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
+            self.rect.x += self.speedx
+        # Método que faz o personagem pular
     def jump(self):
-        # Só pode pular se ainda não estiver pulando ou caindo
+            # Só pode pular se ainda não estiver pulando ou caindo
         if self.state == STILL:
             self.speedy -= JUMP_SIZE
             self.state = JUMPING
