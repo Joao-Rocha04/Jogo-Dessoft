@@ -12,6 +12,7 @@ IMG_TIRO_PRINCIPAL = 'img_tiro_principal'
 IMG_TIRO_INIMIGO = 'img_tiro_inimigo'
 SCORE_FONT = 'score_font'
 BACKGROUND = 'background'
+VOO_INIMIGO1 = 'voo_inimigo1'
 def load_image(filename):
     return pygame.image.load(os.path.join(IMG, *filename))
 def convert_alpha_image(*filename):
@@ -41,4 +42,14 @@ def load_assets():
     assets['score_font'] = pygame.font.Font(os.path.join(FNT, 'PressStart2P.ttf'), 10)
     assets['background'] = convert_alpha_image('backgrounds','12.png')
     assets['background'] = pygame.transform.scale(assets['background'],(largura,altura))
+    assets['background2'] = convert_alpha_image('backgrounds','14.png')
+    assets['background2'] = pygame.transform.scale(assets['background2'],(largura,altura))
+    assets['background3'] = convert_alpha_image('backgrounds','40.png')
+    assets['background3'] = pygame.transform.scale(assets['background3'],(largura,altura))
+    voo_inimigo1 = []
+    for i in range(1,7):
+        img = convert_alpha_image('Enemy01',f'fly0{i}')
+        img = pygame.transform.scale(img,(largura_inimigo1,altura_inimigo1))
+        voo_inimigo1.append(img)
+    assets[VOO_INIMIGO1] = voo_inimigo1
     return assets

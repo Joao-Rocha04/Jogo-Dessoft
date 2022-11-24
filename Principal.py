@@ -91,7 +91,7 @@ while game:
             player.kill()
             pygame.quit()
 
-    if  int(pygame.time.get_ticks()) % 100 == 0:
+    if int(pygame.time.get_ticks()) % 100 == 0:
         i = random.randint(1,5)
         if i == 1:
             inimigo1 = Inimigo1(groups,assets,player)
@@ -116,7 +116,7 @@ while game:
     all_personagens.add(all_inimigos)
     all_sprites.update()
     window.fill((0,0,0))
-    window.blit(assets['background'], (0, 0))
+    window.blit(assets['background3'], (0, 0))
     all_sprites.draw(window)
     for sprite in all_personagens:
         window.blit(sprite.text_surface, sprite.text_rect)
