@@ -91,7 +91,7 @@ while game:
             player.kill()
             pygame.quit()
 
-    if int(pygame.time.get_ticks()) % 100 == 0:
+    if int(pygame.time.get_ticks()) % 200 == 0:
         i = random.randint(1,5)
         if i == 1:
             inimigo1 = Inimigo1(groups,assets,player)

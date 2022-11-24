@@ -48,7 +48,7 @@ def load_assets():
     assets['background3'] = pygame.transform.scale(assets['background3'],(largura,altura))
     voo_inimigo1 = []
     for i in range(1,7):
-        img = convert_alpha_image('Enemy01',f'fly0{i}')
+        img = convert_alpha_image('Enemy01',f'fly0{i}.png')
         img = pygame.transform.scale(img,(largura_inimigo1,altura_inimigo1))
         voo_inimigo1.append(img)
     assets[VOO_INIMIGO1] = voo_inimigo1

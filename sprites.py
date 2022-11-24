@@ -1,7 +1,7 @@
 import pygame
 import random
 from config import largura, altura, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
-from assets import VOO_INIMIGO,SCORE_FONT,IMG_TIRO_INIMIGO,IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
+from assets import VOO_INIMIGO1,SCORE_FONT,IMG_TIRO_INIMIGO,IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
 import math
 
 posicoes_para_inimigosx = [0,1000]
@@ -127,8 +127,9 @@ class Inimigo1(pygame.sprite.Sprite):
     def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
-
-        self.image = assets[IMG_ENEMY1]
+        self.atual = 0
+        self.sprite = assets[VOO_INIMIGO1]
+        self.image = self.sprite[self.atual]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.centerx = random.choice(posicoes_para_inimigosx)
@@ -144,15 +145,17 @@ class Inimigo1(pygame.sprite.Sprite):
         self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
         self.text_rect = self.text_surface.get_rect()
         self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
-        self.atual = 0
     def update(self):
+        self.atual+= 0.01
+        if self.atual>= len(self.sprite): 
+            self.atual = 0
+        self.image = self.sprite[int(self.atual)]
         # Atualização da posição da nave
         if self.principal.rect.centerx > self.rect.centerx:
             self.speedx = 3
-            self.image = self.assets[IMG_ENEMY1]
         else:
             self.speedx = -3
-            self.image = pygame.transform.flip(self.assets[IMG_ENEMY1],True,False)
+            self.image = pygame.transform.flip(self.image,True,False)
 
         self.rect.x += self.speedx
 
