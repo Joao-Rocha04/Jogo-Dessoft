@@ -18,15 +18,18 @@ all_sprites = pygame.sprite.Group()
 all_inimigos = pygame.sprite.Group()
 all_tiros = pygame.sprite.Group()
 all_tiros_inimigos = pygame.sprite.Group()
+all_personagens = pygame.sprite.Group()
 groups = {}
 groups['all_sprites'] = all_sprites
 groups['all_meteors'] = all_inimigos
 groups['all_tiros'] = all_tiros
 groups['all_tiros_inimigos'] = all_tiros_inimigos
+groups['all_personagens'] = all_personagens
 keys_down = {}
 # Criando o jogador
 player = Principal(groups, assets)
 all_sprites.add(player)
+all_personagens.add(player)
 inimigo1 = Inimigo1(groups,assets,player)
 all_sprites.add(inimigo1)
 all_inimigos.add(inimigo1)
@@ -83,7 +86,7 @@ while game:
             inimigo.kill()
 
 
-    if  int(pygame.time.get_ticks()) % 65 == 0:
+    if  int(pygame.time.get_ticks()) % 100 == 0:
         i = random.randint(1,5)
         if i == 1:
             inimigo1 = Inimigo1(groups,assets,player)
@@ -105,11 +108,11 @@ while game:
             inimigo5 = Inimigo5(groups,assets,player)
             all_sprites.add(inimigo5)
             all_inimigos.add(inimigo5)
+    all_personagens.add(all_inimigos)
     all_sprites.update()
     window.fill((0,0,0))
     all_sprites.draw(window)
-    for sprite in all_inimigos:
-
+    for sprite in all_personagens:
         window.blit(sprite.text_surface, sprite.text_rect)
     # ----- Gera saídas
     # ----- Atualiza estado do jogo

@@ -37,7 +37,10 @@ class Principal(pygame.sprite.Sprite):
         # Só será possível atirar uma vez a cada 500 milissegundos
         self.last_shot = pygame.time.get_ticks()
         self.shoot_ticks = 1000
-
+        self.lifes = 3
+        self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
+        self.text_rect = self.text_surface.get_rect()
+        self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
     def update(self):
         # Atualização da posição da nave
         self.rect.x += self.speedx
@@ -67,7 +70,9 @@ class Principal(pygame.sprite.Sprite):
             self.speedy = 0
             # Atualiza o estado para parado
             self.state = STILL
-
+        self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
+        self.text_rect = self.text_surface.get_rect()
+        self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
     # Método que faz o personagem pular
     def jump(self):
         # Só pode pular se ainda não estiver pulando ou caindo
