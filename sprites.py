@@ -1,10 +1,10 @@
 import pygame
 import random
 from config import largura, altura, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
-from assets import IMG_TIRO_INIMIGO,IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
+from assets import SCORE_FONT,IMG_TIRO_INIMIGO,IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
 import math
 
-posicoes_para_inimigosx = [0,600]
+posicoes_para_inimigosx = [0,1000]
 
 # Define a aceleração da gravidade
 GRAVITY = 2
@@ -114,7 +114,7 @@ class Tiro_Principal(pygame.sprite.Sprite):
         self.rect.x += self.speedx
 
         # Se o tiro passar do inicio da tela, morre.
-        if self.rect.x < 0 or self.rect.x > 600:
+        if self.rect.x < 0 or self.rect.x > largura:
             self.kill()
 
 
@@ -131,12 +131,14 @@ class Inimigo1(pygame.sprite.Sprite):
         self.speedx = 0
         self.groups = groups
         self.assets = assets
-
+        self.lifes = 1
         self.principal = principal
         # Só será possível atirar uma vez a cada 500 milissegundos
         self.last_shot = pygame.time.get_ticks()
         self.shoot_ticks = 2000
-
+        self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
+        self.text_rect = self.text_surface.get_rect()
+        self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
     def update(self):
         # Atualização da posição da nave
         if self.principal.rect.centerx > self.rect.centerx:
@@ -160,6 +162,12 @@ class Inimigo1(pygame.sprite.Sprite):
         # Se já pode atirar novamente...
         if elapsed_ticks > self.shoot_ticks:
             self.shoot()
+
+
+        self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
+        self.text_rect = self.text_surface.get_rect()
+        self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
+
     def shoot(self):
         # Verifica se pode atirar
         now = pygame.time.get_ticks()
@@ -223,12 +231,14 @@ class Inimigo2(pygame.sprite.Sprite):
         self.speedx = 0
         self.groups = groups
         self.assets = assets
-
+        self.lifes = 1
         self.principal = principal
         # Só será possível atirar uma vez a cada 500 milissegundos
         self.last_shot = pygame.time.get_ticks()
         self.shoot_ticks = 600
-
+        self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
+        self.text_rect = self.text_surface.get_rect()
+        self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
     def update(self):
         # Atualização da posição da nave
         if self.principal.rect.x >= self.rect.centerx:
@@ -241,7 +251,9 @@ class Inimigo2(pygame.sprite.Sprite):
 
 
         self.rect.x += self.speedx
-
+        self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
+        self.text_rect = self.text_surface.get_rect()
+        self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
         # Mantem dentro da tela
         if self.rect.right > largura:
             self.rect.right = largura
@@ -261,14 +273,19 @@ class Inimigo3(pygame.sprite.Sprite):
         self.speedx = 0
         self.groups = groups
         self.assets = assets
-
+        self.lifes = 2
         self.principal = principal
         # Só será possível atirar uma vez a cada 500 milissegundos
         self.last_shot = pygame.time.get_ticks()
         self.shoot_ticks = 2000
-
+        self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
+        self.text_rect = self.text_surface.get_rect()
+        self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
     def update(self):
         # Atualização da posição da nave
+        self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
+        self.text_rect = self.text_surface.get_rect()
+        self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
         if self.principal.rect.centerx > self.rect.centerx:
             self.speedx = 3
             self.image = self.assets[IMG_ENEMY3]
@@ -299,12 +316,14 @@ class Inimigo4(pygame.sprite.Sprite):
         self.speedx = 0
         self.groups = groups
         self.assets = assets
-
+        self.lifes = 2
         self.principal = principal
         # Só será possível atirar uma vez a cada 500 milissegundos
         self.last_shot = pygame.time.get_ticks()
         self.shoot_ticks = 2000
-
+        self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
+        self.text_rect = self.text_surface.get_rect()
+        self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
     def update(self):
         # Atualização da posição da nave
         if self.principal.rect.centerx > self.rect.centerx:
@@ -315,7 +334,9 @@ class Inimigo4(pygame.sprite.Sprite):
             self.speedx = -2
             self.image = pygame.transform.flip(self.assets[IMG_ENEMY4],True,False)
 
-
+        self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
+        self.text_rect = self.text_surface.get_rect()
+        self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
         self.rect.x += self.speedx
 
         # Mantem dentro da tela
@@ -338,12 +359,14 @@ class Inimigo5(pygame.sprite.Sprite):
         self.speedx = 0
         self.groups = groups
         self.assets = assets
-
+        self.lifes = 3
         self.principal = principal
         # Só será possível atirar uma vez a cada 500 milissegundos
         self.last_shot = pygame.time.get_ticks()
         self.shoot_ticks = 2000
-
+        self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
+        self.text_rect = self.text_surface.get_rect()
+        self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
     def update(self):
         # Atualização da posição da nave
         if self.principal.rect.centerx > self.rect.centerx:
@@ -356,7 +379,9 @@ class Inimigo5(pygame.sprite.Sprite):
 
 
         self.rect.x += self.speedx
-
+        self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
+        self.text_rect = self.text_surface.get_rect()
+        self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
         # Mantem dentro da tela
         if self.rect.right > largura:
             self.rect.right = largura

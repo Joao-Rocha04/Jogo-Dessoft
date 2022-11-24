@@ -1,6 +1,6 @@
 import pygame
 import os
-from config import IMG, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
+from config import FNT,IMG, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
 
 IMG_ENEMY1 = 'img_enemy1'
 IMG_ENEMY2 = 'img_enemy2'
@@ -10,13 +10,14 @@ IMG_ENEMY5 = 'img_enemy5'
 IMG_PRINCIPAL = 'img_principal'
 IMG_TIRO_PRINCIPAL = 'img_tiro_principal'
 IMG_TIRO_INIMIGO = 'img_tiro_inimigo'
-
+SCORE_FONT = 'score_font'
 
 def load_image(filename):
     return pygame.image.load(os.path.join(IMG, *filename))
-
 def convert_alpha_image(*filename):
     return load_image(filename).convert_alpha()
+def load_font(filename):
+    return pygame.font.Font(os.path.join(FNT,*filename))
 
 
 def load_assets():
@@ -37,4 +38,5 @@ def load_assets():
     assets['img_tiro_principal'] = pygame.transform.scale(assets['img_tiro_principal'], (40,40))
     assets['img_tiro_inimigo'] = convert_alpha_image('Enemy01','attack03.png')
     assets['img_tiro_inimigo'] = pygame.transform.scale(assets['img_tiro_inimigo'],(30,30))
+    assets['score_font'] = pygame.font.Font(os.path.join(FNT, 'PressStart2P.ttf'), 10)
     return assets
