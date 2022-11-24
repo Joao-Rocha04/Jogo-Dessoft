@@ -20,6 +20,10 @@ WALK_INIMIGO2 = 'walk_inimigo2'
 WALK_INIMIGO3 = 'walk_inimigo3'
 WALK_INIMIGO4 = 'walk_inimigo4'
 WALK_INIMIGO5 = 'walk_inimigo5'
+WALK_PRINCIPAL = 'walk_principal'
+ANIM_TIRO = 'anim_tiro'
+ANIM_ATAQUE_PRINCIPAL = 'anim_ataque_principal'
+ANIM_ATAQUE_INI5 = 'anim_ataque_ini5'
 
 
 def load_image(filename):
@@ -103,4 +107,28 @@ def load_assets():
         img = pygame.transform.scale(img,(largura_inimigo2,altura_inimigo2))
         walk_inimigo2.append(img)
     assets[WALK_INIMIGO2] = walk_inimigo2
+    walk_principal = []
+    for i in range(1,8):
+        img = convert_alpha_image('principal','PNG','Idle, run, jump',f'run0{i}.png')
+        img = pygame.transform.scale(img,(largura_principal,altura_principal))
+        walk_principal.append(img)
+    assets[WALK_PRINCIPAL] = walk_principal
+    anim_tiro = []
+    for i in range(1,4):
+        img = convert_alpha_image('principal','PNG','Throw attack',f'throw_attack0{i}.png')
+        img = pygame.transform.scale(img,(largura_principal,altura_principal))
+        anim_tiro.append(img)
+    assets[ANIM_TIRO] = anim_tiro
+    anim_ataque_principal = []
+    for i in range(1,7):
+        img = convert_alpha_image('principal','PNG','Attacks',f'AttackA0{i}.png')
+        img = pygame.transform.scale(img,(largura_principal,altura_principal))
+        anim_ataque_principal.append(img)
+    assets[ANIM_ATAQUE_PRINCIPAL] = anim_ataque_principal
+    ataque_ini5 = []
+    for i in range(1,6):
+        img = convert_alpha_image('Enemy05',f'attack0{i}.png')
+        img = pygame.transform.scale(img,(largura_inimigo5,altura_inimigo5))
+        ataque_ini5.append(img)
+    assets[ANIM_ATAQUE_INI5] = ataque_ini5
     return assets

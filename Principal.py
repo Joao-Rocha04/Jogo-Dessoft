@@ -71,6 +71,8 @@ while game:
                 player.shoot()
             if event.key == pygame.K_UP:
                 player.jump()
+            if event.key == pygame.K_a:
+                player.ataque = True
         if event.type == pygame.KEYUP:
             # Dependendo da tecla, altera a velocidade.
             if event.key in keys_down and keys_down[event.key]:

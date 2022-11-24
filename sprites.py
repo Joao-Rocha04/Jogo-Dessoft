@@ -1,7 +1,7 @@
 import pygame
 import random
 from config import largura, altura, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
-from assets import WALK_INIMIGO5,WALK_INIMIGO4,WALK_INIMIGO3,WALK_INIMIGO2,HIT_INIMIGO1,VOO_INIMIGO1,SCORE_FONT,IMG_TIRO_INIMIGO,IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
+from assets import ANIM_ATAQUE_INI5,ANIM_ATAQUE_PRINCIPAL,ANIM_TIRO,WALK_PRINCIPAL,WALK_INIMIGO5,WALK_INIMIGO4,WALK_INIMIGO3,WALK_INIMIGO2,HIT_INIMIGO1,VOO_INIMIGO1,SCORE_FONT,IMG_TIRO_INIMIGO,IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
 import math
 
 posicoes_para_inimigosx = [0,1000]
@@ -23,6 +23,8 @@ class Principal(pygame.sprite.Sprite):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
         self.state = STILL
+        self.sprite = assets[WALK_PRINCIPAL]
+        self.atual = 0
         self.image = assets[IMG_PRINCIPAL]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
@@ -41,10 +43,14 @@ class Principal(pygame.sprite.Sprite):
         self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
         self.text_rect = self.text_surface.get_rect()
         self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
+        self.direita = True
+        self.ataque = False
     def update(self):
+        self.sprite = self.assets[WALK_PRINCIPAL]
         # Atualização da posição da nave
-        self.rect.x += self.speedx
-
+        self.atual= self.atual + 0.3
+        if self.atual>= len(self.sprite): 
+            self.atual = 0
         # Mantem dentro da tela
         if self.rect.right > largura:
             self.rect.right = largura
@@ -53,10 +59,32 @@ class Principal(pygame.sprite.Sprite):
         if self.speedx != 0:
             if self.speedx>0:
                 self.direcx = 1
-                self.image = self.assets[IMG_PRINCIPAL]
+                self.image = self.sprite[int(self.atual)]
+                self.direita = True
             else:
                 self.direcx = -1
-                self.image = pygame.transform.flip(self.assets[IMG_PRINCIPAL],True,False)
+                self.image = self.sprite[int(self.atual)]
+                self.image = pygame.transform.flip(self.image,True,False)
+                self.direita = False
+        else:
+            self.image = self.assets[IMG_PRINCIPAL]
+            if self.direita== True:
+                self.image = self.assets[IMG_PRINCIPAL]
+            else:
+                self.image = pygame.transform.flip(self.image,True,False)
+        if self.ataque == True:
+            self.sprite = self.assets[ANIM_ATAQUE_PRINCIPAL]
+            self.atual = 0
+            while self.atual<=6:
+                if self.direita == True:
+                    self.image = self.sprite[int(self.atual)]
+                    self.atual +=0.1
+                else:
+                    self.image = self.sprite[int(self.atual)]
+                    self.image = pygame.transform.flip(self.image,True,False)
+                    self.atual+=0.1
+            self.ataque = False
+            self.atual = 0
         self.speedy += GRAVITY
         # Atualiza o estado para caindo
         if self.speedy > 0:
@@ -73,6 +101,7 @@ class Principal(pygame.sprite.Sprite):
         self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
         self.text_rect = self.text_surface.get_rect()
         self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
+        self.rect.x += self.speedx
     # Método que faz o personagem pular
     def jump(self):
         # Só pode pular se ainda não estiver pulando ou caindo
@@ -86,7 +115,6 @@ class Principal(pygame.sprite.Sprite):
         now = pygame.time.get_ticks()
         # Verifica quantos ticks se passaram desde o último tiro.
         elapsed_ticks = now - self.last_shot
-
         # Se já pode atirar novamente...
         if elapsed_ticks > self.shoot_ticks:
             # Marca o tick da nova imagem.
@@ -122,6 +150,10 @@ class Tiro_Principal(pygame.sprite.Sprite):
         if self.rect.x < 0 or self.rect.x > largura:
             self.kill()
 
+class Ataque_Principal(pygame.sprite.Sprite):
+    def __init__(self,assets,principal):
+        pygame.sprite.Sprite.__init__(self)
+        self.sprite = assets[ANIM_ATAQUE_PRINCIPAL]
 
 class Inimigo1(pygame.sprite.Sprite):
     def __init__(self, groups, assets,principal):
@@ -378,7 +410,7 @@ class Inimigo4(pygame.sprite.Sprite):
             self.rect.right = largura
         if self.rect.left < 0:
             self.rect.left = 0
-
+        self.atual= self.atual + 0.3
 
 class Inimigo5(pygame.sprite.Sprite):
     def __init__(self, groups, assets,principal):
@@ -405,6 +437,7 @@ class Inimigo5(pygame.sprite.Sprite):
         self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
     def update(self):
         # Atualização da posição da nave
+        self.sprite = self.assets[WALK_INIMIGO5]
         if self.atual>= len(self.sprite): 
             self.atual = 0
         self.image = self.sprite[int(self.atual)]
@@ -417,6 +450,7 @@ class Inimigo5(pygame.sprite.Sprite):
             self.image = self.sprite[int(self.atual)]
             self.image = pygame.transform.flip(self.image,True,False)
 
+            
 
         self.rect.x += self.speedx
         self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
@@ -427,3 +461,11 @@ class Inimigo5(pygame.sprite.Sprite):
             self.rect.right = largura
         if self.rect.left < 0:
             self.rect.left = 0
+        
+        self.atual= self.atual + 0.3
+    def ataque(self):
+        self.sprite = self.assets[ANIM_ATAQUE_INI5]
+        self.atual = 0
+        while self.atual<=5:
+            self.image = self.sprite[int(self.atual)]
+        self.atual+=0.3
