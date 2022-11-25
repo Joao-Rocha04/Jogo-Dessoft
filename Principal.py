@@ -50,7 +50,7 @@ all_inimigos.add(inimigo4)
 inimigo5 = Inimigo5(groups,assets,player)
 all_sprites.add(inimigo5)
 all_inimigos.add(inimigo5)
-
+last_hit = 0
 # ===== Loop principal =====
 while game:
     clock.tick(30)
@@ -94,7 +94,6 @@ while game:
             player.kill()
             pygame.quit()
     now = pygame.time.get_ticks()
-    last_hit = 0
     hit_ticks = 2000
     hit_principal1 = pygame.sprite.spritecollide(player,all_inimigos,False)
     if now - last_hit> 2000:
