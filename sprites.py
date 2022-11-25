@@ -167,7 +167,7 @@ class Inimigo1(pygame.sprite.Sprite):
         self.speedx = 0
         self.groups = groups
         self.assets = assets
-        self.lifes = 2
+        self.lifes = 1
         self.principal = principal
         # Só será possível atirar uma vez a cada 500 milissegundos
         self.last_shot = pygame.time.get_ticks()
@@ -443,12 +443,14 @@ class Inimigo5(pygame.sprite.Sprite):
         self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
         self.direita = True
         self.ataque = False
+        self.last_shot = pygame.time.get_ticks()
+        self.shoot_ticks = 1000
     def update(self):
         # Atualização da posição da nave
         if self.ataque == True:
+            self.sprite = self.assets[ANIM_ATAQUE_INI5]
             if self.atual>len(self.sprite)+0.1:
                 self.atual = 0
-            self.sprite = self.assets[ANIM_ATAQUE_INI5]
             if self.atual>= len(self.sprite):
                 self.ataque = False
                 self.sprite = self.assets[WALK_INIMIGO5]
@@ -482,6 +484,12 @@ class Inimigo5(pygame.sprite.Sprite):
             if self.rect.left < 0:
                 self.rect.left = 0
             aaa = self.principal.rect.centerx - self.rect.centerx
-            if -20 <= aaa <=20:
+            now = pygame.time.get_ticks()
+        # Verifica quantos ticks se passaram desde o último tiro.
+            elapsed_ticks = now - self.last_shot
+            # Se já pode atirar novamente...
+            if elapsed_ticks > self.shoot_ticks and -20 <= aaa <=20:
+            # Marca o tick da nova imagem.
+                self.last_shot = now
                 self.ataque = True
             self.atual= self.atual + 0.3

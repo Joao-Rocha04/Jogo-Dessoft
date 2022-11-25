@@ -27,8 +27,8 @@ altura_inimigo4 = 90
 largura_inimigo5 = 100
 altura_inimigo5 = 80
 
-largura_principal = 80
-altura_principal = 80
+largura_principal = 100
+altura_principal = 100
 
 # Define algumas variáveis com as cores básicas
 branco = (255, 255, 255)
