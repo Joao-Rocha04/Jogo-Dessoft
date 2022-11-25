@@ -9,7 +9,7 @@ posicoes_para_inimigosx = [0,1000]
 # Define a aceleração da gravidade
 GRAVITY = 2
 # Define a velocidade inicial no pulo
-JUMP_SIZE = 20
+JUMP_SIZE = 25
 # Define a altura do chão
 GROUND = 600
 

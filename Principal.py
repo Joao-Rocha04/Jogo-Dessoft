@@ -8,6 +8,7 @@ clock = pygame.time.Clock()
 WIDTH = 1000
 HEIGHT = 600
 window = pygame.display.set_mode((WIDTH, HEIGHT))
+now1 = 0
 pygame.display.set_caption('Hello World!')
 # ----- Inicia estruturas de dados
 game = True
@@ -21,7 +22,7 @@ all_tiros_inimigos = pygame.sprite.Group()
 all_personagens = pygame.sprite.Group()
 groups = {}
 groups['all_sprites'] = all_sprites
-groups['all_meteors'] = all_inimigos
+groups['all_inimigos'] = all_inimigos
 groups['all_tiros'] = all_tiros
 groups['all_tiros_inimigos'] = all_tiros_inimigos
 groups['all_personagens'] = all_personagens
@@ -37,7 +38,6 @@ all_inimigos.add(inimigo1)
 inimigo2 = Inimigo2(groups,assets,player)
 all_sprites.add(inimigo2)
 all_inimigos.add(inimigo2)
-
 
 inimigo3 = Inimigo3(groups,assets,player)
 all_sprites.add(inimigo3)
@@ -93,6 +93,28 @@ while game:
         if player.lifes == 0:
             player.kill()
             pygame.quit()
+    now = pygame.time.get_ticks()
+    last_hit = 0
+    hit_ticks = 2000
+    hit_principal1 = pygame.sprite.spritecollide(player,all_inimigos,False)
+    if now - last_hit> 2000:
+        last_hit = now
+        if len(hit_principal1)>0:
+            player.lifes = player.lifes - 1
+            if player.lifes == 0:
+                player.kill()
+                pygame.quit()
+            hit_principal1 = []
+
+    #if len(hit_principal1)>0:
+        #elapsed_ticks = now - last_hit
+        #print(now)
+        #if elapsed_ticks > hit_ticks:
+            #last_hit = now
+            #player.lifes = player.lifes - len(hit_principal1)
+            #if player.lifes == 0:
+                #player.kill()
+                #pygame.quit()
 
     if int(pygame.time.get_ticks()) % 200 == 0:
         i = random.randint(1,5)
