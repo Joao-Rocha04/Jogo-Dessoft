@@ -103,7 +103,7 @@ while game:
             player.lifes = player.lifes - 1
             if player.lifes == 0:
                 player.kill()
-                pygame.quit()
+                game = False
             hit_principal1 = []
 
     #if len(hit_principal1)>0:
