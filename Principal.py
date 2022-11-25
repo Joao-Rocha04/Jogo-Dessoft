@@ -31,25 +31,11 @@ keys_down = {}
 player = Principal(groups, assets)
 all_sprites.add(player)
 all_personagens.add(player)
-inimigo1 = Inimigo1(groups,assets,player)
-all_sprites.add(inimigo1)
-all_inimigos.add(inimigo1)
-
 inimigo2 = Inimigo2(groups,assets,player)
 all_sprites.add(inimigo2)
 all_inimigos.add(inimigo2)
 
-inimigo3 = Inimigo3(groups,assets,player)
-all_sprites.add(inimigo3)
-all_inimigos.add(inimigo3)
 
-inimigo4 = Inimigo4(groups,assets,player)
-all_sprites.add(inimigo4)
-all_inimigos.add(inimigo4)
-
-inimigo5 = Inimigo5(groups,assets,player)
-all_sprites.add(inimigo5)
-all_inimigos.add(inimigo5)
 last_hit = 0
 # ===== Loop principal =====
 while game:
@@ -92,11 +78,11 @@ while game:
         player.lifes = player.lifes - len(hit_principal)
         if player.lifes == 0:
             player.kill()
-            pygame.quit()
+            game = False
     now = pygame.time.get_ticks()
-    hit_ticks = 2000
+    hit_ticks = 1000
     hit_principal1 = pygame.sprite.spritecollide(player,all_inimigos,False)
-    if now - last_hit> 2000:
+    if now - last_hit> hit_ticks:
         last_hit = now
         if len(hit_principal1)>0:
             player.lifes = player.lifes - 1

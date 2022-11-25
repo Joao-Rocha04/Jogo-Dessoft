@@ -15,8 +15,8 @@ fps = 60 # Frames por segundo
 largura_inimigo1 = 50
 altura_inimigo1 = 50
 
-largura_inimigo2 = 40
-altura_inimigo2 = 50
+largura_inimigo2 = 60
+altura_inimigo2 = 90
 
 largura_inimigo3 = 100
 altura_inimigo3 = 110
