@@ -1,5 +1,5 @@
 import pygame
-from assets import load_assets
+from assets import load_assets,ANIM_ATAQUE_PRINCIPAL
 from sprites import Principal, Inimigo1, Inimigo2, Inimigo3, Inimigo4, Inimigo5
 import random
 pygame.init()
@@ -34,9 +34,8 @@ player = Principal(groups, assets)
 all_sprites.add(player)
 all_personagens.add(player)
 
-
-
 last_hit = 0
+last_hit1 = 0
 # ===== Loop principal =====
 while game:
     clock.tick(30)
@@ -58,8 +57,13 @@ while game:
                 player.shoot()
             if event.key == pygame.K_UP:
                 player.jump()
-            if event.key == pygame.K_a:
+            if event.key == pygame.K_q:
                 player.especial1 = True
+            if event.key == pygame.K_e:
+                if player.direita == True:
+                    player.rect.centerx = player.rect.centerx + 100
+                else:
+                    player.rect.centerx = player.rect.centerx - 100
         if event.type == pygame.KEYUP:
             # Dependendo da tecla, altera a velocidade.
             if event.key in keys_down and keys_down[event.key]:
@@ -77,37 +81,31 @@ while game:
             inimigo.kill()
     hit_principal = pygame.sprite.spritecollide(player,all_tiros_inimigos,True)
     if len(hit_principal)>0:
-        player.lifes = player.lifes - len(hit_principal)
-        player.atual = 0
-        player.hit = True
-        if player.lifes == 0:
+        if player.sprite != player.assets[ANIM_ATAQUE_PRINCIPAL]:
+            player.lifes = player.lifes - len(hit_principal)
             player.atual = 0
-            player.morte = True
-            game = False
+            player.hit = True
+            if player.lifes == 0:
+                player.atual = 0
+                player.morte = True
+                game = False 
     now = pygame.time.get_ticks()
     hit_ticks = 1500
     hit_principal1 = pygame.sprite.spritecollide(player,all_inimigos,False)
     if now - last_hit> hit_ticks:
         last_hit = now
         if len(hit_principal1)>0:
-            player.hit = True
-            player.lifes = player.lifes - 1
-            if player.lifes == 0:
-                player.morte= True 
-                game = False
-            hit_principal1 = []
-
-    #if len(hit_principal1)>0:
-        #elapsed_ticks = now - last_hit
-        #print(now)
-        #if elapsed_ticks > hit_ticks:
-            #last_hit = now
-            #player.lifes = player.lifes - len(hit_principal1)
-            #if player.lifes == 0:
-                #player.kill()
-                #pygame.quit()
-
-    if int(pygame.time.get_ticks()) % 200 == 0:
+            if player.sprite != player.assets[ANIM_ATAQUE_PRINCIPAL]:
+                player.lifes = player.lifes - 1
+                player.atual = 0
+                player.hit = True
+                if player.lifes == 0:
+                    player.morte= True 
+                    game = False
+    now1 = pygame.time.get_ticks()
+    hit_ticks1 = 2000
+    if now1 - last_hit1> hit_ticks1:
+        last_hit1 = now1
         i = random.randint(1,5)
         if i == 1:
             inimigo = Inimigo1(groups,assets,player)

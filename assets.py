@@ -28,7 +28,7 @@ ANIM_ATAQUE_INI5 = 'anim_ataque_ini5'
 MORTE = 'morte'
 HIT_PRINCIPAL = 'hit_principal'
 ATAQUE_INI4 = 'ataque_ini4'
-
+ATAQUE_INI3 = 'ataque_ini3'
 def load_image(filename):
     return pygame.image.load(os.path.join(IMG, *filename))
 def convert_alpha_image(*filename):
@@ -54,7 +54,7 @@ def load_assets():
     assets['img_tiro_principal'] = convert_alpha_image('principal','PNG','Throw attack', 'throw_dagger.png')
     assets['img_tiro_principal'] = pygame.transform.scale(assets['img_tiro_principal'], (40,40))
     assets['img_tiro_principal1'] = convert_alpha_image('principal','PNG','Throw attack', 'throw_dagger.png')
-    assets['img_tiro_principal1'] = pygame.transform.scale(assets['img_tiro_principal'], (100,100))
+    assets['img_tiro_principal1'] = pygame.transform.scale(assets['img_tiro_principal'], (100,150))
     assets['img_tiro_inimigo'] = convert_alpha_image('Enemy01','attack03.png')
     assets['img_tiro_inimigo'] = pygame.transform.scale(assets['img_tiro_inimigo'],(30,30))
     assets['score_font'] = pygame.font.Font(os.path.join(FNT, 'PressStart2P.ttf'), 10)
@@ -154,4 +154,10 @@ def load_assets():
         img = pygame.transform.scale(img,(largura_inimigo4,altura_inimigo4))
         ataqueini4.append(img)
     assets[ATAQUE_INI4]= ataqueini4
+    ataque3 = []
+    for i in range(1,8):
+        img = convert_alpha_image('Enemy03',f'attack_right0{i}.png')
+        img = pygame.transform.scale(img,(largura_inimigo3,altura_inimigo3))
+        ataque3.append(img)
+    assets[ATAQUE_INI3] = ataque3
     return assets

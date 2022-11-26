@@ -12,8 +12,8 @@ fps = 60 # Frames por segundo
 
 # Define tamanhos
 # Define tamanhos
-largura_inimigo1 = 50
-altura_inimigo1 = 50
+largura_inimigo1 = 70
+altura_inimigo1 = 70
 
 largura_inimigo2 = 60
 altura_inimigo2 = 90
