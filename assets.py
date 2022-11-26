@@ -29,6 +29,7 @@ MORTE = 'morte'
 HIT_PRINCIPAL = 'hit_principal'
 ATAQUE_INI4 = 'ataque_ini4'
 ATAQUE_INI3 = 'ataque_ini3'
+ULT = 'ult'
 def load_image(filename):
     return pygame.image.load(os.path.join(IMG, *filename))
 def convert_alpha_image(*filename):
@@ -64,6 +65,7 @@ def load_assets():
     assets['background2'] = pygame.transform.scale(assets['background2'],(largura,altura))
     assets['background3'] = convert_alpha_image('backgrounds','40.png')
     assets['background3'] = pygame.transform.scale(assets['background3'],(largura,altura))
+
     voo_inimigo1 = []
     for i in range(1,7):
         img = convert_alpha_image('Enemy01',f'fly0{i}.png')

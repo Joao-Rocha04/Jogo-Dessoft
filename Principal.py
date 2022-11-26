@@ -1,5 +1,5 @@
 import pygame
-from assets import load_assets,ANIM_ATAQUE_PRINCIPAL
+from assets import load_assets,ANIM_ATAQUE_PRINCIPAL,ULT
 from sprites import Principal, Inimigo1, Inimigo2, Inimigo3, Inimigo4, Inimigo5
 import random
 pygame.init()
@@ -29,13 +29,16 @@ groups['all_tiros_inimigos'] = all_tiros_inimigos
 groups['all_personagens'] = all_personagens
 groups['all_tiros_especial'] = all_tiros_especial
 keys_down = {}
+print(pygame.font.get_fonts())
 # Criando o jogador
 player = Principal(groups, assets) 
 all_sprites.add(player)
 all_personagens.add(player)
-
+score = 0
+ult = 0
 last_hit = 0
 last_hit1 = 0
+font = pygame.font.SysFont(None, 48)
 # ===== Loop principal =====
 while game:
     clock.tick(30)
@@ -58,7 +61,9 @@ while game:
             if event.key == pygame.K_UP:
                 player.jump()
             if event.key == pygame.K_q:
-                player.especial1 = True
+                if ult==100:
+                    player.especial1 = True
+                    ult = 0
             if event.key == pygame.K_e:
                 if player.direita == True:
                     player.rect.centerx = player.rect.centerx + 100
@@ -72,6 +77,11 @@ while game:
                 if event.key == pygame.K_RIGHT:
                     player.speedx -= 10
     # ----- Atualiza estado do jogo
+    if ult!= 100:
+        text = font.render(f'ESPECIAL = {ult}%', True, (0, 0, 0))
+    if ult == 100:
+        text = font.render(f'ESPECIAL PRONTO (Q)', True, (0, 0, 0))
+    pontos = font.render(f'Pontos = {score}', True, (0, 0, 0))
     hits1 = pygame.sprite.groupcollide(all_inimigos, all_tiros_especial, True, False, pygame.sprite.collide_mask)
     hits = pygame.sprite.groupcollide(all_inimigos, all_tiros, False, True, pygame.sprite.collide_mask)
     for inimigo in hits:
@@ -79,15 +89,19 @@ while game:
         inimigo.lifes -=1
         if inimigo.lifes == 0:
             inimigo.kill()
+            if ult!= 100:
+                ult += 5
+            score += 100
     hit_principal = pygame.sprite.spritecollide(player,all_tiros_inimigos,True)
     if len(hit_principal)>0:
         if player.sprite != player.assets[ANIM_ATAQUE_PRINCIPAL]:
             player.lifes = player.lifes - len(hit_principal)
             player.atual = 0
             player.hit = True
-            if player.lifes == 0:
+            if player.lifes <= 0:
                 player.atual = 0
-                player.morte = True
+                #player.morte = True
+                player.kill()
                 game = False 
     now = pygame.time.get_ticks()
     hit_ticks = 1500
@@ -99,12 +113,14 @@ while game:
                 player.lifes = player.lifes - 1
                 player.atual = 0
                 player.hit = True
-                if player.lifes == 0:
-                    player.morte= True 
+                if player.lifes <= 0:
+                    #player.morte= True
+                    player.kill()
                     game = False
     now1 = pygame.time.get_ticks()
     hit_ticks1 = 2000
     if now1 - last_hit1> hit_ticks1:
+        hit_ticks1-=20
         last_hit1 = now1
         i = random.randint(1,5)
         if i == 1:
@@ -131,6 +147,8 @@ while game:
     all_sprites.update()
     window.fill((0,0,0))
     window.blit(assets['background3'], (0, 0))
+    window.blit(text, (10, 10))
+    window.blit(pontos, (750, 10))
     all_sprites.draw(window)
     for sprite in all_personagens:
         window.blit(sprite.text_surface, sprite.text_rect)
