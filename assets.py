@@ -24,7 +24,9 @@ WALK_PRINCIPAL = 'walk_principal'
 ANIM_TIRO = 'anim_tiro'
 ANIM_ATAQUE_PRINCIPAL = 'anim_ataque_principal'
 ANIM_ATAQUE_INI5 = 'anim_ataque_ini5'
-
+MORTE = 'morte'
+HIT_PRINCIPAL = 'hit_principal'
+ATAQUE_INI4 = 'ataque_ini4'
 
 def load_image(filename):
     return pygame.image.load(os.path.join(IMG, *filename))
@@ -131,4 +133,22 @@ def load_assets():
         img = pygame.transform.scale(img,(largura_inimigo5,altura_inimigo5))
         ataque_ini5.append(img)
     assets[ANIM_ATAQUE_INI5] = ataque_ini5
+    morte = []
+    for i in range(1,5):
+        img = convert_alpha_image('principal','PNG','Hit, death',f'death0{i}.png')
+        img = pygame.transform.scale(img,(largura_principal,altura_principal))
+        morte.append(img)
+    assets[MORTE] = morte
+    hit_principal = []
+    for i in range(1,3):
+        img = convert_alpha_image('principal','PNG','Hit, death',f'hit0{i}.png')
+        img = pygame.transform.scale(img,(largura_principal,altura_principal))
+        hit_principal.append(img)
+    assets[HIT_PRINCIPAL] = hit_principal
+    ataqueini4 = []
+    for i in range(1,7):
+        img = convert_alpha_image('Enemy04',f'attack0{i}.png')
+        img = pygame.transform.scale(img,(largura_inimigo4,altura_inimigo4))
+        ataqueini4.append(img)
+    assets[ATAQUE_INI4]= ataqueini4
     return assets

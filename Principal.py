@@ -31,7 +31,7 @@ keys_down = {}
 player = Principal(groups, assets)
 all_sprites.add(player)
 all_personagens.add(player)
-inimigo2 = Inimigo2(groups,assets,player)
+inimigo2 = Inimigo4(groups,assets,player)
 all_sprites.add(inimigo2)
 all_inimigos.add(inimigo2)
 
@@ -76,7 +76,11 @@ while game:
     hit_principal = pygame.sprite.spritecollide(player,all_tiros_inimigos,True)
     if len(hit_principal)>0:
         player.lifes = player.lifes - len(hit_principal)
+        player.atual = 0
+        player.hit = True
         if player.lifes == 0:
+            player.atual = 0
+            player.morte = True
             player.kill()
             game = False
     now = pygame.time.get_ticks()
