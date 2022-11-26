@@ -20,20 +20,20 @@ all_inimigos = pygame.sprite.Group()
 all_tiros = pygame.sprite.Group()
 all_tiros_inimigos = pygame.sprite.Group()
 all_personagens = pygame.sprite.Group()
+all_tiros_especial = pygame.sprite.Group()
 groups = {}
 groups['all_sprites'] = all_sprites
 groups['all_inimigos'] = all_inimigos
 groups['all_tiros'] = all_tiros
 groups['all_tiros_inimigos'] = all_tiros_inimigos
 groups['all_personagens'] = all_personagens
+groups['all_tiros_especial'] = all_tiros_especial
 keys_down = {}
 # Criando o jogador
-player = Principal(groups, assets)
+player = Principal(groups, assets) 
 all_sprites.add(player)
 all_personagens.add(player)
-inimigo2 = Inimigo4(groups,assets,player)
-all_sprites.add(inimigo2)
-all_inimigos.add(inimigo2)
+
 
 
 last_hit = 0
@@ -54,11 +54,12 @@ while game:
                 player.speedx += 10
                 ultima_tecla = False
             if event.key == pygame.K_SPACE:
+                player.ataque = True
                 player.shoot()
             if event.key == pygame.K_UP:
                 player.jump()
             if event.key == pygame.K_a:
-                player.ataque = True
+                player.especial1 = True
         if event.type == pygame.KEYUP:
             # Dependendo da tecla, altera a velocidade.
             if event.key in keys_down and keys_down[event.key]:
@@ -67,6 +68,7 @@ while game:
                 if event.key == pygame.K_RIGHT:
                     player.speedx -= 10
     # ----- Atualiza estado do jogo
+    hits1 = pygame.sprite.groupcollide(all_inimigos, all_tiros_especial, True, False, pygame.sprite.collide_mask)
     hits = pygame.sprite.groupcollide(all_inimigos, all_tiros, False, True, pygame.sprite.collide_mask)
     for inimigo in hits:
         inimigo.hit = True
@@ -81,17 +83,17 @@ while game:
         if player.lifes == 0:
             player.atual = 0
             player.morte = True
-            player.kill()
             game = False
     now = pygame.time.get_ticks()
-    hit_ticks = 1000
+    hit_ticks = 1500
     hit_principal1 = pygame.sprite.spritecollide(player,all_inimigos,False)
     if now - last_hit> hit_ticks:
         last_hit = now
         if len(hit_principal1)>0:
+            player.hit = True
             player.lifes = player.lifes - 1
             if player.lifes == 0:
-                player.kill()
+                player.morte= True 
                 game = False
             hit_principal1 = []
 
@@ -108,25 +110,25 @@ while game:
     if int(pygame.time.get_ticks()) % 200 == 0:
         i = random.randint(1,5)
         if i == 1:
-            inimigo1 = Inimigo1(groups,assets,player)
-            all_sprites.add(inimigo1)
-            all_inimigos.add(inimigo1)
+            inimigo = Inimigo1(groups,assets,player)
+            all_sprites.add(inimigo)
+            all_inimigos.add(inimigo)
         elif i ==2:
-            inimigo2 = Inimigo2(groups,assets,player)
-            all_sprites.add(inimigo2)
-            all_inimigos.add(inimigo2)
+            inimigo = Inimigo2(groups,assets,player)
+            all_sprites.add(inimigo)
+            all_inimigos.add(inimigo)
         elif i == 3:
-            inimigo3 = Inimigo3(groups,assets,player)
-            all_sprites.add(inimigo3)
-            all_inimigos.add(inimigo3)
+            inimigo = Inimigo3(groups,assets,player)
+            all_sprites.add(inimigo)
+            all_inimigos.add(inimigo)
         elif i ==4:
-            inimigo4 = Inimigo4(groups,assets,player)
-            all_sprites.add(inimigo4)
-            all_inimigos.add(inimigo4)
+            inimigo = Inimigo4(groups,assets,player)
+            all_sprites.add(inimigo)
+            all_inimigos.add(inimigo)
         elif i ==5:
-            inimigo5 = Inimigo5(groups,assets,player)
-            all_sprites.add(inimigo5)
-            all_inimigos.add(inimigo5)
+            inimigo = Inimigo5(groups,assets,player)
+            all_sprites.add(inimigo)
+            all_inimigos.add(inimigo)
     all_personagens.add(all_inimigos)
     all_sprites.update()
     window.fill((0,0,0))

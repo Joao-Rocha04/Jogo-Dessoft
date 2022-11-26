@@ -9,6 +9,7 @@ IMG_ENEMY4 = 'img_enemy4'
 IMG_ENEMY5 = 'img_enemy5'
 IMG_PRINCIPAL = 'img_principal'
 IMG_TIRO_PRINCIPAL = 'img_tiro_principal'
+IMG_TIRO_PRINCIPAL1 = 'img_tiro_principal1'
 IMG_TIRO_INIMIGO = 'img_tiro_inimigo'
 SCORE_FONT = 'score_font'
 BACKGROUND = 'background'
@@ -52,6 +53,8 @@ def load_assets():
     assets['img_principal'] = pygame.transform.scale(assets['img_principal'], (largura_principal, altura_principal))
     assets['img_tiro_principal'] = convert_alpha_image('principal','PNG','Throw attack', 'throw_dagger.png')
     assets['img_tiro_principal'] = pygame.transform.scale(assets['img_tiro_principal'], (40,40))
+    assets['img_tiro_principal1'] = convert_alpha_image('principal','PNG','Throw attack', 'throw_dagger.png')
+    assets['img_tiro_principal1'] = pygame.transform.scale(assets['img_tiro_principal'], (100,100))
     assets['img_tiro_inimigo'] = convert_alpha_image('Enemy01','attack03.png')
     assets['img_tiro_inimigo'] = pygame.transform.scale(assets['img_tiro_inimigo'],(30,30))
     assets['score_font'] = pygame.font.Font(os.path.join(FNT, 'PressStart2P.ttf'), 10)
@@ -122,8 +125,8 @@ def load_assets():
         anim_tiro.append(img)
     assets[ANIM_TIRO] = anim_tiro
     anim_ataque_principal = []
-    for i in range(1,7):
-        img = convert_alpha_image('principal','PNG','Attacks',f'AttackA0{i}.png')
+    for i in range(1,8):
+        img = convert_alpha_image('principal','PNG','Attacks',f'AttackD0{i}.png')
         img = pygame.transform.scale(img,(largura_principal,altura_principal))
         anim_ataque_principal.append(img)
     assets[ANIM_ATAQUE_PRINCIPAL] = anim_ataque_principal

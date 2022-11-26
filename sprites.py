@@ -1,7 +1,7 @@
 import pygame
 import random
 from config import largura, altura, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
-from assets import ATAQUE_INI4,MORTE,HIT_PRINCIPAL,ATTACK_INIMIGO2,ANIM_ATAQUE_INI5,ANIM_ATAQUE_PRINCIPAL,ANIM_TIRO,WALK_PRINCIPAL,WALK_INIMIGO5,WALK_INIMIGO4,WALK_INIMIGO3,WALK_INIMIGO2,HIT_INIMIGO1,VOO_INIMIGO1,SCORE_FONT,IMG_TIRO_INIMIGO,IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
+from assets import IMG_TIRO_PRINCIPAL1,ATAQUE_INI4,MORTE,HIT_PRINCIPAL,ATTACK_INIMIGO2,ANIM_ATAQUE_INI5,ANIM_ATAQUE_PRINCIPAL,ANIM_TIRO,WALK_PRINCIPAL,WALK_INIMIGO5,WALK_INIMIGO4,WALK_INIMIGO3,WALK_INIMIGO2,HIT_INIMIGO1,VOO_INIMIGO1,SCORE_FONT,IMG_TIRO_INIMIGO,IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
 import math
 
 posicoes_para_inimigosx = [0,1000]
@@ -47,12 +47,30 @@ class Principal(pygame.sprite.Sprite):
         self.ataque = False
         self.hit = False
         self.morte = False
+        self.contador = 0
+        self.especial1 = False
     def update(self):
         if self.ataque == True:
-            self.sprite = self.assets[ANIM_ATAQUE_PRINCIPAL]
+            self.sprite = self.assets[ANIM_TIRO]
             if self.atual>= len(self.sprite):
                 self.sprite = self.assets[WALK_PRINCIPAL]
                 self.ataque = False
+            if self.direita == True:
+                self.image = self.sprite[int(self.atual)]
+            else:
+                self.image = self.sprite[int(self.atual)]
+                self.image = pygame.transform.flip(self.image,True,False)
+            self.atual+=0.3
+        if self.especial1 == True:
+            self.sprite = self.assets[ANIM_ATAQUE_PRINCIPAL]
+            if self.atual>len(self.sprite):
+                if self.contador == 1:
+                    self.especial()
+                    self.especial1 = False
+                    self.sprite = self.assets[WALK_PRINCIPAL]
+                    self.contador = 0
+                self.contador+=1
+                self.atual = 0
             if self.direita == True:
                 self.image = self.sprite[int(self.atual)]
             else:
@@ -72,6 +90,9 @@ class Principal(pygame.sprite.Sprite):
             self.atual+=0.1
         elif self.morte == True:
             self.sprite = self.assets[MORTE]
+            if self.contador == 0:
+                self.atual = 0
+                self.contador+=1
             if self.atual>= len(self.sprite):
                 self.sprite = self.assets[WALK_PRINCIPAL]
                 self.morte = False
@@ -81,7 +102,7 @@ class Principal(pygame.sprite.Sprite):
             else:
                 self.image = self.sprite[int(self.atual)]
                 self.image = pygame.transform.flip(self.image,True,False)
-            self.atual+=0.3
+            self.atual+=0.1
         else:
             self.sprite = self.assets[WALK_PRINCIPAL]
             # Atualização da posição da nave
@@ -148,7 +169,19 @@ class Principal(pygame.sprite.Sprite):
             new_bullet = Tiro_Principal(self.assets, self)
             self.groups['all_sprites'].add(new_bullet)
             self.groups['all_tiros'].add(new_bullet)
-
+    def especial(self):
+        # Verifica se pode atirar
+        now = pygame.time.get_ticks()
+        # Verifica quantos ticks se passaram desde o último tiro.
+        elapsed_ticks = now - self.last_shot
+        # Se já pode atirar novamente...
+        if elapsed_ticks > self.shoot_ticks:
+            # Marca o tick da nova imagem.
+            self.last_shot = now
+            #A nova bala vai ser criada logo acima e no centro horizontal da nave
+            new_bullet = Tiro_Especial(self.assets, self)
+            self.groups['all_sprites'].add(new_bullet)
+            self.groups['all_tiros_especial'].add(new_bullet)
 class Tiro_Principal(pygame.sprite.Sprite):
     # Construtor da classe.
     def __init__(self, assets, principal):
@@ -161,12 +194,34 @@ class Tiro_Principal(pygame.sprite.Sprite):
         self.principal = principal
         # Coloca no lugar inicial definido em x, y do constutor
         self.rect.centerx = principal.rect.centerx
-        self.rect.centery = principal.rect.centery
+        self.rect.centery = principal.rect.centery+20
         self.speedx = 15 * principal.direcx  # Velocidade fixa para cima
         if self.speedx<0:
             self.image = pygame.transform.flip(assets[IMG_TIRO_PRINCIPAL],True,False)
+    def update(self):
+        # A bala só se move no eixo y
+        self.rect.x += self.speedx
 
+        # Se o tiro passar do inicio da tela, morre.
+        if self.rect.x < 0 or self.rect.x > largura:
+            self.kill()
 
+class Tiro_Especial(pygame.sprite.Sprite):
+    # Construtor da classe.
+    def __init__(self, assets, principal):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = assets[IMG_TIRO_PRINCIPAL1]
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect = self.image.get_rect()
+        self.principal = principal
+        # Coloca no lugar inicial definido em x, y do constutor
+        self.rect.centerx = principal.rect.centerx
+        self.rect.centery = principal.rect.centery+20
+        self.speedx = 15 * principal.direcx  # Velocidade fixa para cima
+        if self.speedx<0:
+            self.image = pygame.transform.flip(assets[IMG_TIRO_PRINCIPAL1],True,False)
     def update(self):
         # A bala só se move no eixo y
         self.rect.x += self.speedx
