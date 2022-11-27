@@ -1,8 +1,11 @@
+#importando bibliotecas
 import pygame
 from assets import load_assets,ANIM_ATAQUE_PRINCIPAL,ULT
 from sprites import Principal, Inimigo1, Inimigo2, Inimigo3, Inimigo4, Inimigo5
 import random
+#inicio do jogo
 pygame.init()
+#fps do jogo
 clock = pygame.time.Clock()
 # ----- Gera tela principal
 WIDTH = 1000
@@ -14,7 +17,7 @@ pygame.display.set_caption('Hello World!')
 game = True
 assets = load_assets()
 # ----- Inicia assets
-# Criando um grupo de meteoros
+# Criando os grupos
 all_sprites = pygame.sprite.Group()
 all_inimigos = pygame.sprite.Group()
 all_tiros = pygame.sprite.Group()
@@ -55,6 +58,7 @@ while game:
                 player.speedx += 10
                 ultima_tecla = False
             if event.key == pygame.K_SPACE:
+                #faz o personagem atirar
                 player.ataque = True
                 player.shoot()
             if event.key == pygame.K_UP:

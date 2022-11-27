@@ -1,7 +1,9 @@
+#immportando bibliotecas
 import pygame
 import os
 from config import largura,altura,FNT,IMG, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
 
+#itens do dicionário
 IMG_ENEMY1 = 'img_enemy1'
 IMG_ENEMY2 = 'img_enemy2'
 IMG_ENEMY3 = 'img_enemy3'
@@ -30,6 +32,7 @@ HIT_PRINCIPAL = 'hit_principal'
 ATAQUE_INI4 = 'ataque_ini4'
 ATAQUE_INI3 = 'ataque_ini3'
 ULT = 'ult'
+#funções para importar imagens e animações
 def load_image(filename):
     return pygame.image.load(os.path.join(IMG, *filename))
 def convert_alpha_image(*filename):
@@ -37,9 +40,11 @@ def convert_alpha_image(*filename):
 def load_font(filename):
     return pygame.font.Font(os.path.join(FNT,*filename))
 
-
+#função que vai importar todos os sprites
 def load_assets():
+    #criando dicionário
     assets = {}
+    #importando imagens
     assets['img_enemy1'] = convert_alpha_image('Enemy01','fly01.png')
     assets['img_enemy1'] = pygame.transform.scale(assets['img_enemy1'],(largura_inimigo1,altura_inimigo1))
     assets['img_enemy2'] = convert_alpha_image('Enemy02','idle01.png')
@@ -65,6 +70,7 @@ def load_assets():
     assets['background2'] = pygame.transform.scale(assets['background2'],(largura,altura))
     assets['background3'] = convert_alpha_image('backgrounds','40.png')
     assets['background3'] = pygame.transform.scale(assets['background3'],(largura,altura))
+    #importando todas as animações
 
     voo_inimigo1 = []
     for i in range(1,7):
