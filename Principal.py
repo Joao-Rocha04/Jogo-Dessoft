@@ -31,8 +31,7 @@ groups['all_tiros'] = all_tiros
 groups['all_tiros_inimigos'] = all_tiros_inimigos
 groups['all_personagens'] = all_personagens
 groups['all_tiros_especial'] = all_tiros_especial
-keys_down = {}
-print(pygame.font.get_fonts())
+keys_down = {}   
 # Criando o jogador
 player = Principal(groups, assets) 
 all_sprites.add(player)
