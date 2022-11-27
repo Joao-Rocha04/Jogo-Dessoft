@@ -1,7 +1,7 @@
 import pygame
 from os import path
 
-from config import IMG, preto, fps, GAME, QUIT
+from config import IMG, preto, fps, GAME, QUIT, CONFIG
 
 
 def init_screen(screen):
@@ -9,7 +9,7 @@ def init_screen(screen):
     clock = pygame.time.Clock()
 
     # Carrega o fundo da tela inicial
-    background = pygame.image.load(path.join(IMG, 'inicio.png')).convert()
+    background = pygame.image.load(path.join(IMG, 'inicio.jpg')).convert()
     background_rect = background.get_rect()
 
     running = True
@@ -30,7 +30,7 @@ def init_screen(screen):
                 running = False
             
             if event.type==pygame.K_w:
-                state=config
+                state = CONFIG
                 running = False
 
         # A cada loop, redesenha o fundo e os sprites
