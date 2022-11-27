@@ -1,7 +1,9 @@
+#immportando bibliotecas
 import pygame
 import os
 from config import largura,altura,FNT,IMG, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
 
+#itens do dicionário
 IMG_ENEMY1 = 'img_enemy1'
 IMG_ENEMY2 = 'img_enemy2'
 IMG_ENEMY3 = 'img_enemy3'
@@ -30,6 +32,7 @@ HIT_PRINCIPAL = 'hit_principal'
 ATAQUE_INI4 = 'ataque_ini4'
 ATAQUE_INI3 = 'ataque_ini3'
 ULT = 'ult'
+#funções para importar imagens e animações
 def load_image(filename):
     return pygame.image.load(os.path.join(IMG, *filename))
 def convert_alpha_image(*filename):
