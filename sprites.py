@@ -215,13 +215,14 @@ class Tiro_Principal(pygame.sprite.Sprite):
         if self.speedx<0:
             self.image = pygame.transform.flip(assets[IMG_TIRO_PRINCIPAL],True,False)
     def update(self):
-        # A bala só se move no eixo y
+        # A bala só se move no eixo x
         self.rect.x += self.speedx
 
         # Se o tiro passar do inicio da tela, morre.
         if self.rect.x < 0 or self.rect.x > largura:
             self.kill()
 
+#classe para o especial do principal
 class Tiro_Especial(pygame.sprite.Sprite):
     # Construtor da classe.
     def __init__(self, assets, principal):
@@ -239,14 +240,14 @@ class Tiro_Especial(pygame.sprite.Sprite):
         if self.speedx<0:
             self.image = pygame.transform.flip(assets[IMG_TIRO_PRINCIPAL1],True,False)
     def update(self):
-        # A bala só se move no eixo y
+        # A bala só se move no eixo x
         self.rect.x += self.speedx
 
         # Se o tiro passar do inicio da tela, morre.
         if self.rect.x < 0 or self.rect.x > largura:
             self.kill()
 
-
+#classe para o primeiro inimigo
 class Inimigo1(pygame.sprite.Sprite):
     def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
@@ -273,6 +274,7 @@ class Inimigo1(pygame.sprite.Sprite):
         self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
         self.direita = True
     def update(self):
+        #caso o inimigo sofra hit
         if self.hit == True:
             self.sprite = self.assets[HIT_INIMIGO1]
             if self.atual>= len(self.sprite):
@@ -284,6 +286,7 @@ class Inimigo1(pygame.sprite.Sprite):
                 self.image = self.sprite[int(self.atual)]
                 self.image = pygame.transform.flip(self.image,True,False)
             self.atual+=0.3
+        #quando o inimigo estiver voando
         else:
             if self.atual>= len(self.sprite): 
                 self.atual = 0
@@ -299,7 +302,7 @@ class Inimigo1(pygame.sprite.Sprite):
                 self.image = self.sprite[int(self.atual)]
                 self.image = pygame.transform.flip(self.image,True,False)
 
-            #self.rect.x += self.speedx
+
 
             # Mantem dentro da tela
             if self.rect.right > largura:
@@ -314,11 +317,12 @@ class Inimigo1(pygame.sprite.Sprite):
             if elapsed_ticks > self.shoot_ticks:
                 self.shoot()
 
-
+            #mostra as vidas do inimigo
             self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
             self.text_rect = self.text_surface.get_rect()
             self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
             self.atual= self.atual + 0.3
+    #tiro do inimigo
     def shoot(self):
         # Verifica se pode atirar
         now = pygame.time.get_ticks()
@@ -334,7 +338,7 @@ class Inimigo1(pygame.sprite.Sprite):
             self.groups['all_sprites'].add(novo_tiro_inimigo)
             self.groups['all_tiros_inimigos'].add(novo_tiro_inimigo)
 
-
+#classe para o tiro do inimigo
 class Tiro_inimigo(pygame.sprite.Sprite):
     # Construtor da classe.
     def __init__(self, assets, principal,inimigo,groups):
@@ -357,7 +361,9 @@ class Tiro_inimigo(pygame.sprite.Sprite):
         self.ball_y = inimigo.rect.y
         self.ACELERACAO = .5
         self.groups = groups
+        #faz a conta para onde o tiro tem que ir
         self.angulo = math.atan((self.ball_y - self.y) / (self.ball_x - self.x))
+    #faz o update do tiro
     def update(self):
         forca = 17
         ball_speed_x = math.cos(self.angulo) * forca
