@@ -376,7 +376,7 @@ class Tiro_inimigo(pygame.sprite.Sprite):
 
 
 
-
+#define classe do inimigo 2
 class Inimigo2(pygame.sprite.Sprite):
     def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
@@ -403,16 +403,16 @@ class Inimigo2(pygame.sprite.Sprite):
         self.last_shot = pygame.time.get_ticks()
         self.shoot_ticks = 1000
         self.direita = True
+    #update da posição do inimigo
     def update(self):
         x = True
-        # Atualização da posição da nave
+        # Animação para o ataque do inimigo 2
         if self.ataque == True:
             self.sprite = self.assets[ATTACK_INIMIGO2]
             if self.atual> 8:
                 self.atual = 0
             if self.atual>= len(self.sprite)+0.1:
                 self.ataque = False
-                print('e')
                 x = False
                 self.sprite = self.assets[WALK_INIMIGO2]
             if x == True:
@@ -422,6 +422,7 @@ class Inimigo2(pygame.sprite.Sprite):
                     self.image = self.sprite[int(self.atual)]
                     self.image = pygame.transform.flip(self.image,True,False)
             self.atual+=0.3
+        #animação de andar do inimigo 2
         else:
             self.sprite = self.assets[WALK_INIMIGO2]
             if self.atual>= len(self.sprite): 
@@ -456,6 +457,7 @@ class Inimigo2(pygame.sprite.Sprite):
                 self.last_shot = now
                 self.ataque = True
             self.atual= self.atual + 0.3
+#classe para o inimigo 3
 class Inimigo3(pygame.sprite.Sprite):
     def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
@@ -483,7 +485,9 @@ class Inimigo3(pygame.sprite.Sprite):
         self.atual = 0
         self.ataque = False
         self.contador = 0
+    #faz o update da posição do inimigo 3
     def update(self):
+        #ataque do inimigo 3
         if self.ataque == True:
             self.sprite = self.assets[ATAQUE_INI3]
             if self.atual>len(self.sprite):
@@ -499,6 +503,7 @@ class Inimigo3(pygame.sprite.Sprite):
                 self.image = self.sprite[int(self.atual)]
                 self.image = pygame.transform.flip(self.image,True,False)
             self.atual+=0.3
+        #andar do inimigo 3
         else:
         # Atualização da posição da nave
             self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
@@ -536,6 +541,7 @@ class Inimigo3(pygame.sprite.Sprite):
         if self.rect.left < 0:
             self.rect.left = 0
 
+#classe para o inimigo 4
 class Inimigo4(pygame.sprite.Sprite):
     def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
@@ -555,7 +561,6 @@ class Inimigo4(pygame.sprite.Sprite):
         self.principal = principal
         # Só será possível atirar uma vez a cada 500 milissegundos
         self.last_shot = pygame.time.get_ticks()
-        self.shoot_ticks = 2000
         self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
         self.text_rect = self.text_surface.get_rect()
         self.text_rect.bottomleft = (self.rect.x-5,self.rect.top+10)
@@ -564,7 +569,9 @@ class Inimigo4(pygame.sprite.Sprite):
         self.last_shot = pygame.time.get_ticks()
         self.shoot_ticks = 1000
         self.contador = 0
+    #faz o update do inimigo 4
     def update(self):
+        #ataque do inimigo 4
         if self.ataque == True:
             self.sprite = self.assets[ATAQUE_INI4]
             if self.atual>len(self.sprite):
@@ -580,6 +587,7 @@ class Inimigo4(pygame.sprite.Sprite):
                 self.image = self.sprite[int(self.atual)]
                 self.image = pygame.transform.flip(self.image,True,False)
             self.atual+=0.3
+        #andar o inimigo 4
         else:
             if self.atual>= len(self.sprite): 
                 self.atual = 0
@@ -612,7 +620,7 @@ class Inimigo4(pygame.sprite.Sprite):
                 self.last_shot = now
                 self.ataque = True
             self.atual= self.atual + 0.3
-
+#classe do inimigo 5
 class Inimigo5(pygame.sprite.Sprite):
     def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
@@ -640,8 +648,10 @@ class Inimigo5(pygame.sprite.Sprite):
         self.ataque = False
         self.last_shot = pygame.time.get_ticks()
         self.shoot_ticks = 1000
+    #faz o update do inimigo 5
     def update(self):
         # Atualização da posição da nave
+        #ataque do inimigo 5
         if self.ataque == True:
             self.sprite = self.assets[ANIM_ATAQUE_INI5]
             if self.atual>len(self.sprite)+0.1:
@@ -655,6 +665,7 @@ class Inimigo5(pygame.sprite.Sprite):
                 self.image = self.sprite[int(self.atual)]
                 self.image = pygame.transform.flip(self.image,True,False)
             self.atual+=0.3
+        #andar do inimigo 5
         else:
             self.sprite = self.assets[WALK_INIMIGO5]
             if self.atual>= len(self.sprite): 
