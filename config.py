@@ -3,32 +3,32 @@ from os import path
 # Estabelece a pasta que contem as figuras e sons.
 IMG = path.join(path.dirname(__file__), 'assets', 'img',)
 #SND_DIR = path.join(path.dirname(__file__), 'assets', 'snd')
-#FNT_DIR = path.join(path.dirname(__file__), 'assets', 'font')
+FNT = path.join(path.dirname(__file__), 'assets', 'fnt')
 
 # Dados gerais do jogo.
-largura = 600 # Largura da tela
+largura = 1000 # Largura da tela
 altura = 600 # Altura da tela
 fps = 60 # Frames por segundo
 
 # Define tamanhos
 # Define tamanhos
-largura_inimigo1 = 20
-altura_inimigo1 = 35
+largura_inimigo1 = 70
+altura_inimigo1 = 70
 
-largura_inimigo2 = 20
-altura_inimigo2 = 35
+largura_inimigo2 = 60
+altura_inimigo2 = 90
 
-largura_inimigo3 = 30
-altura_inimigo3 = 50
+largura_inimigo3 = 100
+altura_inimigo3 = 110
 
-largura_inimigo4 = 30
-altura_inimigo4 = 50
+largura_inimigo4 = 95
+altura_inimigo4 = 90
 
-largura_inimigo5 = 35
-altura_inimigo5 = 60
+largura_inimigo5 = 100
+altura_inimigo5 = 80
 
-largura_principal = 30
-altura_principal = 40
+largura_principal = 100
+altura_principal = 100
 
 # Define algumas variáveis com as cores básicas
 branco = (255, 255, 255)
