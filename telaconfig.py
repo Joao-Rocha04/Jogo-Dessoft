@@ -25,9 +25,12 @@ def config_screen(screen):
                 state = QUIT
                 running = False
 
-            if event.type == pygame.K_ESCAPE:
-                state = INIT
-                running = False
+            if event.type == pygame.KEYDOWN:
+
+
+                if event.key == pygame.K_ESCAPE:
+                    state = INIT
+                    running = False
             
             
 
