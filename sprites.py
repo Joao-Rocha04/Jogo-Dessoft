@@ -1,24 +1,10 @@
+#importando bibliotecas
 import pygame
 import random
 from config import largura, altura, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
 from assets import ATAQUE_INI3,IMG_TIRO_PRINCIPAL1,ATAQUE_INI4,MORTE,HIT_PRINCIPAL,ATTACK_INIMIGO2,ANIM_ATAQUE_INI5,ANIM_ATAQUE_PRINCIPAL,ANIM_TIRO,WALK_PRINCIPAL,WALK_INIMIGO5,WALK_INIMIGO4,WALK_INIMIGO3,WALK_INIMIGO2,HIT_INIMIGO1,VOO_INIMIGO1,SCORE_FONT,IMG_TIRO_INIMIGO,IMG_TIRO_PRINCIPAL,IMG_ENEMY1,IMG_ENEMY2,IMG_ENEMY3,IMG_ENEMY4,IMG_ENEMY5,IMG_PRINCIPAL
 import math
-def fazer_animacao(objeto,lista,lista2):
-    objeto.sprite = objeto.assets[lista]
-    if objeto.contador == 0:
-        objeto.atual = 0
-        objeto.contador +=1
-    if objeto.atual>len(objeto.sprite):
-        objeto.ataque = False
-        objeto.contador = 0
-        objeto.atual = 0
-        objeto.sprite = objeto.assets[lista2]
-    if objeto.direita == True:
-        objeto.image = objeto.sprite[int(objeto.atual)]
-    else:
-        objeto.image = objeto.sprite[int(objeto.atual)]
-        objeto.image = pygame.transform.flip(objeto.image,True,False)
-    objeto.atual+=0.3
+
 posicoes_para_inimigosx = [0,1000]
 
 # Define a aceleração da gravidade
@@ -33,6 +19,7 @@ STILL = 0
 JUMPING = 1
 FALLING = 2
 
+#classe do personagem principal
 class Principal(pygame.sprite.Sprite):
     def __init__(self, groups, assets):
         # Construtor da classe mãe (Sprite).
@@ -64,7 +51,9 @@ class Principal(pygame.sprite.Sprite):
         self.morte = False
         self.contador = 0
         self.especial1 = False
+    #update do principal personagem
     def update(self):
+        #animação de ataque
         if self.ataque == True:
             self.sprite = self.assets[ANIM_TIRO]
             if self.atual>len(self.sprite):
@@ -81,6 +70,7 @@ class Principal(pygame.sprite.Sprite):
                 self.image = self.sprite[int(self.atual)]
                 self.image = pygame.transform.flip(self.image,True,False)
             self.atual+=0.3
+        #animação do especial
         if self.especial1 == True:
             self.sprite = self.assets[ANIM_ATAQUE_PRINCIPAL]
             if self.atual>len(self.sprite):
@@ -97,6 +87,7 @@ class Principal(pygame.sprite.Sprite):
                 self.image = self.sprite[int(self.atual)]
                 self.image = pygame.transform.flip(self.image,True,False)
             self.atual+=0.3
+        #animação do hit do personagem
         elif self.hit == True:
             self.sprite = self.assets[HIT_PRINCIPAL]
             if self.atual>= len(self.sprite):
@@ -108,6 +99,7 @@ class Principal(pygame.sprite.Sprite):
                 self.image = self.sprite[int(self.atual)]
                 self.image = pygame.transform.flip(self.image,True,False)
             self.atual+=0.1
+        #animação da morte
         elif self.morte == True:
             self.sprite = self.assets[MORTE]
             if self.contador == 0:
@@ -123,6 +115,7 @@ class Principal(pygame.sprite.Sprite):
                 self.image = self.sprite[int(self.atual)]
                 self.image = pygame.transform.flip(self.image,True,False)
             self.atual+=0.1
+        #animação de andar
         else:
             self.sprite = self.assets[WALK_PRINCIPAL]
             # Atualização da posição da nave
@@ -176,6 +169,7 @@ class Principal(pygame.sprite.Sprite):
             self.state = JUMPING
 
 
+    #função para o personagem atirar
     def shoot(self):
         # Verifica se pode atirar
         now = pygame.time.get_ticks()
@@ -189,6 +183,7 @@ class Principal(pygame.sprite.Sprite):
             new_bullet = Tiro_Principal(self.assets, self)
             self.groups['all_sprites'].add(new_bullet)
             self.groups['all_tiros'].add(new_bullet)
+    #função para o ataque especial do personagem
     def especial(self):
         # Verifica se pode atirar
         now = pygame.time.get_ticks()
@@ -202,6 +197,7 @@ class Principal(pygame.sprite.Sprite):
             new_bullet = Tiro_Especial(self.assets, self)
             self.groups['all_sprites'].add(new_bullet)
             self.groups['all_tiros_especial'].add(new_bullet)
+#classe pro tiro primário do personagem
 class Tiro_Principal(pygame.sprite.Sprite):
     # Construtor da classe.
     def __init__(self, assets, principal):
