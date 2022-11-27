@@ -615,7 +615,6 @@ class Inimigo5(pygame.sprite.Sprite):
     def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
-
         self.atual = 0
         self.sprite = assets[WALK_INIMIGO5]
         self.image = self.sprite[self.atual]
