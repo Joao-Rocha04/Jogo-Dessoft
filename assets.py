@@ -40,9 +40,11 @@ def convert_alpha_image(*filename):
 def load_font(filename):
     return pygame.font.Font(os.path.join(FNT,*filename))
 
-
+#função que vai importar todos os sprites
 def load_assets():
+    #criando dicionário
     assets = {}
+    #importando imagens
     assets['img_enemy1'] = convert_alpha_image('Enemy01','fly01.png')
     assets['img_enemy1'] = pygame.transform.scale(assets['img_enemy1'],(largura_inimigo1,altura_inimigo1))
     assets['img_enemy2'] = convert_alpha_image('Enemy02','idle01.png')
@@ -68,6 +70,7 @@ def load_assets():
     assets['background2'] = pygame.transform.scale(assets['background2'],(largura,altura))
     assets['background3'] = convert_alpha_image('backgrounds','40.png')
     assets['background3'] = pygame.transform.scale(assets['background3'],(largura,altura))
+    #importando todas as animações
 
     voo_inimigo1 = []
     for i in range(1,7):
