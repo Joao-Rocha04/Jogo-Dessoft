@@ -1,7 +1,9 @@
+#importando bibliotecas
 import pygame
 from assets import load_assets,ANIM_ATAQUE_PRINCIPAL,ULT
 from sprites import Principal, Inimigo1, Inimigo2, Inimigo3, Inimigo4, Inimigo5
 import random
+#inicio do jogo
 pygame.init()
 clock = pygame.time.Clock()
 # ----- Gera tela principal
