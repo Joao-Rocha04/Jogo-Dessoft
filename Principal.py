@@ -1,5 +1,5 @@
 import pygame
-from assets import load_assets,ANIM_ATAQUE_PRINCIPAL
+from assets import load_assets,ANIM_ATAQUE_PRINCIPAL,SOM_ADAGA,SOM_ESPECIAL
 from sprites import Principal, Inimigo1, Inimigo2, Inimigo3, Inimigo4, Inimigo5
 from config import OVER
 import random
@@ -56,12 +56,14 @@ def game_screen(window):
                 if event.key == pygame.K_SPACE:
                     player.ataque = True
                     player.atual = 0
+                    assets[SOM_ADAGA].play()
                 if event.key == pygame.K_UP:
                     player.jump()
                 if event.key == pygame.K_q:
                     if ult==100:
                         player.especial1 = True
                         ult = 0
+                        assets[SOM_ESPECIAL].play()
                 if event.key == pygame.K_e:
                     if player.direita == True:
                         player.rect.centerx = player.rect.centerx + 100

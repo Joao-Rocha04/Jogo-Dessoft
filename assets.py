@@ -1,7 +1,7 @@
 #immportando bibliotecas
 import pygame
 import os
-from config import largura,altura,FNT,IMG, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
+from config import SND,largura,altura,FNT,IMG, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
 
 #itens do dicionário
 IMG_ENEMY1 = 'img_enemy1'
@@ -32,6 +32,8 @@ HIT_PRINCIPAL = 'hit_principal'
 ATAQUE_INI4 = 'ataque_ini4'
 ATAQUE_INI3 = 'ataque_ini3'
 ULT = 'ult'
+SOM_ADAGA='som_adaga'
+SOM_ESPECIAL="som_especial"
 #funções para importar imagens e animações
 def load_image(filename):
     return pygame.image.load(os.path.join(IMG, *filename))
@@ -168,4 +170,8 @@ def load_assets():
         img = pygame.transform.scale(img,(largura_inimigo3,altura_inimigo3))
         ataque3.append(img)
     assets[ATAQUE_INI3] = ataque3
+    assets[SOM_ADAGA]=pygame.mixer.Sound(os.path.join(SND,'dagger_drawn2-89025.mp3'))
+    assets[SOM_ESPECIAL]=pygame.mixer.Sound(os.path.join(SND,'sword-hit-7160.mp3'))
+    
+
     return assets
