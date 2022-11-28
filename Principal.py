@@ -112,7 +112,6 @@ def game_screen(window):
                     player.atual = 0
                     player.hit = True
                     if player.lifes <= 0:
-                        #player.morte= True
                         player.kill()
                         game = False
         now1 = pygame.time.get_ticks()
@@ -157,4 +156,4 @@ def game_screen(window):
             window.blit(sprite.text_surface, sprite.text_rect)
         # ----- Gera saídas
         # ----- Atualiza estado do jogo
-        pygame.display.update()  # Mostra o novo frame para o jogador
+        pygame.display.update()  # Mostra o novo frame para o jogador

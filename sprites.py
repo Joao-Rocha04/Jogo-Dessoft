@@ -573,11 +573,11 @@ class Inimigo4(pygame.sprite.Sprite):
             self.image = self.sprite[int(self.atual)]
             if self.principal.rect.centerx > self.rect.centerx:
                 self.direita = True
-                self.speedx = 2
+                self.speedx = 3
                 self.image = self.sprite[int(self.atual)]
             else:
                 self.direita = False
-                self.speedx = -2
+                self.speedx = -3
                 self.image = self.sprite[int(self.atual)]
                 self.image = pygame.transform.flip(self.image,True,False)
             self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
