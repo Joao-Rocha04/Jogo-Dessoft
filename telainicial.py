@@ -15,8 +15,8 @@ def init_screen(screen):
     background_rect = background.get_rect()
     assets=load_assets()
     running = True
+    assets[SOM_ENTRADA].play(-1)
     while running:
-        assets[SOM_ENTRADA].play(-1)
         # Ajusta a velocidade do jogo.
         clock.tick(fps)
 
@@ -25,6 +25,7 @@ def init_screen(screen):
             # Verifica se foi fechado.
             if event.type == pygame.QUIT:
                 state = QUIT
+                pygame.mixer.Sound.stop(assets[SOM_ENTRADA])
                 running = False
             
             if event.type == pygame.KEYDOWN:
@@ -32,10 +33,12 @@ def init_screen(screen):
 
                 if event.key == pygame.K_SPACE:
                     state = GAME
+                    pygame.mixer.Sound.stop(assets[SOM_ENTRADA])
                     running = False
                 
                 if event.key ==pygame.K_w:
                     state = CONFIG
+                    pygame.mixer.Sound.stop(assets[SOM_ENTRADA])
                     running = False
 
         # A cada loop, redesenha o fundo e os sprites
