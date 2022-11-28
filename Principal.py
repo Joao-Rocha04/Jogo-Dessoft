@@ -1,6 +1,6 @@
 
 import pygame
-from assets import load_assets,ANIM_ATAQUE_PRINCIPAL,ULT
+from assets import load_assets,ANIM_ATAQUE_PRINCIPAL
 from sprites import Principal, Inimigo1, Inimigo2, Inimigo3, Inimigo4, Inimigo5
 import random
 
@@ -8,7 +8,7 @@ import random
 def game_screen(window):
     clock=pygame.time.Clock()
     now1 = 0
-
+    tem_inimigo1 = False
     # ----- Inicia estruturas de dados
     game = True
     assets = load_assets()
@@ -37,6 +37,8 @@ def game_screen(window):
     last_hit = 0
     last_hit1 = 0
     font = pygame.font.SysFont(None, 48)
+    hit_ticks1 = 2000
+    inimigo1 = None
     # ===== Loop principal =====
     while game:
         clock.tick(30)
@@ -49,19 +51,16 @@ def game_screen(window):
                 keys_down[event.key] = True
                 if event.key == pygame.K_LEFT:
                     player.speedx -= 10
-                    ultima_tecla = True
                 if event.key == pygame.K_RIGHT:
                     player.speedx += 10
-                    ultima_tecla = False
                 if event.key == pygame.K_SPACE:
                     player.ataque = True
-                    player.shoot()
+                    player.atual = 0
                 if event.key == pygame.K_UP:
                     player.jump()
                 if event.key == pygame.K_q:
                     if ult==100:
                         player.especial1 = True
-                        player.especial()
                         ult = 0
                 if event.key == pygame.K_e:
                     if player.direita == True:
@@ -81,17 +80,18 @@ def game_screen(window):
         if ult == 100:
             text = font.render(f'ESPECIAL PRONTO (Q)', True, (0, 0, 0))
         pontos = font.render(f'Pontos = {score}', True, (0, 0, 0))
-        hits1 = pygame.sprite.groupcollide(all_inimigos, all_tiros_especial, True, False, pygame.sprite.collide_mask)
         hits = pygame.sprite.groupcollide(all_inimigos, all_tiros, False, True, pygame.sprite.collide_mask)
         for inimigo in hits:
             inimigo.hit = True
             inimigo.lifes -=1
             if inimigo.lifes == 0:
+                if inimigo == inimigo1:
+                    tem_inimigo1 = False
                 inimigo.kill()
                 if ult!= 100:
                     ult += 5
                 score += 100
-        hit_principal = pygame.sprite.spritecollide(player,all_tiros_inimigos,True)
+        hit_principal = pygame.sprite.spritecollide(player,all_tiros_inimigos,True,pygame.sprite.collide_mask)
         if len(hit_principal)>0:
             if player.sprite != player.assets[ANIM_ATAQUE_PRINCIPAL]:
                 player.lifes = player.lifes - len(hit_principal)
@@ -99,7 +99,6 @@ def game_screen(window):
                 player.hit = True
                 if player.lifes <= 0:
                     player.atual = 0
-                    #player.morte = True
                     player.kill()
                     game = False 
         now = pygame.time.get_ticks()
@@ -113,19 +112,18 @@ def game_screen(window):
                     player.atual = 0
                     player.hit = True
                     if player.lifes <= 0:
-                        #player.morte= True
                         player.kill()
                         game = False
         now1 = pygame.time.get_ticks()
-        hit_ticks1 = 2000
         if now1 - last_hit1> hit_ticks1:
             hit_ticks1-=20
             last_hit1 = now1
             i = random.randint(1,5)
-            if i == 1:
-                inimigo = Inimigo1(groups,assets,player)
-                all_sprites.add(inimigo)
-                all_inimigos.add(inimigo)
+            if i == 1 and tem_inimigo1 == False:
+                inimigo1 = Inimigo1(groups,assets,player)
+                all_sprites.add(inimigo1)
+                all_inimigos.add(inimigo1)
+                tem_inimigo1 = True
             elif i ==2:
                 inimigo = Inimigo2(groups,assets,player)
                 all_sprites.add(inimigo)
@@ -142,10 +140,15 @@ def game_screen(window):
                 inimigo = Inimigo5(groups,assets,player)
                 all_sprites.add(inimigo)
                 all_inimigos.add(inimigo)
+        hits1 = pygame.sprite.groupcollide(all_inimigos, all_tiros_especial, False, False, pygame.sprite.collide_mask)
+        for inimigo in hits1:
+            if inimigo == inimigo1:
+                tem_inimigo1 = False
+            inimigo.kill()
         all_personagens.add(all_inimigos)
         all_sprites.update()
         window.fill((0,0,0))
-        window.blit(assets['background3'], (0, 0))
+        window.blit(assets['background'], (0, 0))
         window.blit(text, (10, 10))
         window.blit(pontos, (750, 10))
         all_sprites.draw(window)
@@ -154,5 +157,3 @@ def game_screen(window):
         # ----- Gera saídas
         # ----- Atualiza estado do jogo
         pygame.display.update()  # Mostra o novo frame para o jogador
-
-    # ===== Finalização =====
