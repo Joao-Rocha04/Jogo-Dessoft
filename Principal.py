@@ -1,5 +1,5 @@
 import pygame
-from assets import load_assets,ANIM_ATAQUE_PRINCIPAL,SOM_ADAGA,SOM_ESPECIAL
+from assets import load_assets,ANIM_ATAQUE_PRINCIPAL,SOM_ADAGA,SOM_ESPECIAL,SOM_JOGO
 from sprites import Principal, Inimigo1, Inimigo2, Inimigo3, Inimigo4, Inimigo5
 from config import OVER
 import random
@@ -42,6 +42,7 @@ def game_screen(window):
     # ===== Loop principal =====
     while game:
         clock.tick(30)
+        assets[SOM_JOGO].play
         # ----- Trata eventos
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

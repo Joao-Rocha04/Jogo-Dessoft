@@ -1,7 +1,8 @@
 import pygame
 from os import path
-from assets import SOM_ENTRADA
+from assets import SOM_ENTRADA,load_assets
 from config import IMG, preto, fps, GAME, QUIT, CONFIG
+
 
 
 def init_screen(screen):
@@ -12,10 +13,10 @@ def init_screen(screen):
     background = pygame.image.load(path.join(IMG, 'inicio.jpg')).convert()
     background = pygame.transform.scale(background,(1000,600))
     background_rect = background.get_rect()
-
+    assets=load_assets()
     running = True
     while running:
-
+        assets[SOM_ENTRADA].play(-1)
         # Ajusta a velocidade do jogo.
         clock.tick(fps)
 
