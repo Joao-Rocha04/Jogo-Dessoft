@@ -34,6 +34,8 @@ ATAQUE_INI3 = 'ataque_ini3'
 ULT = 'ult'
 SOM_ADAGA='som_adaga'
 SOM_ESPECIAL="som_especial"
+SOM_ENTRADA = 'som_entrada'
+SOM_JOGO = 'som_jogo'
 #funções para importar imagens e animações
 def load_image(filename):
     return pygame.image.load(os.path.join(IMG, *filename))
@@ -172,7 +174,7 @@ def load_assets():
     assets[ATAQUE_INI3] = ataque3
     assets[SOM_ADAGA]=pygame.mixer.Sound(os.path.join(SND,'dagger_drawn2-89025.mp3'))
     assets[SOM_ESPECIAL]=pygame.mixer.Sound(os.path.join(SND,'sword-hit-7160.mp3'))
-    assets[SOM_ESPECIAL]=pygame.mixer.Sound(os.path.join(SND,'field_theme_1.wav'))
-    
+    assets[SOM_ENTRADA]=pygame.mixer.Sound(os.path.join(SND,'field_theme_1.wav'))
+    assets[SOM_JOGO]=pygame.mixer.Sound(os.path.join(SND,'night_theme_2.wav'))
 
     return assets
