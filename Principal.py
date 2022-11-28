@@ -1,4 +1,3 @@
-
 import pygame
 from assets import load_assets,ANIM_ATAQUE_PRINCIPAL
 from sprites import Principal, Inimigo1, Inimigo2, Inimigo3, Inimigo4, Inimigo5
@@ -112,6 +111,7 @@ def game_screen(window):
                     player.atual = 0
                     player.hit = True
                     if player.lifes <= 0:
+                        #player.morte= True
                         player.kill()
                         game = False
         now1 = pygame.time.get_ticks()
@@ -148,7 +148,7 @@ def game_screen(window):
         all_personagens.add(all_inimigos)
         all_sprites.update()
         window.fill((0,0,0))
-        window.blit(assets['background'], (0, 0))
+        window.blit(assets['background3'], (0, 0))
         window.blit(text, (10, 10))
         window.blit(pontos, (750, 10))
         all_sprites.draw(window)
@@ -156,4 +156,4 @@ def game_screen(window):
             window.blit(sprite.text_surface, sprite.text_rect)
         # ----- Gera saídas
         # ----- Atualiza estado do jogo
-        pygame.display.update()  # Mostra o novo frame para o jogador
+        pygame.display.update()  # Mostra o novo frame para o jogador

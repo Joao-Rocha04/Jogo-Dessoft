@@ -21,9 +21,9 @@ FALLING = 2
 
 #classe do personagem principal
 class Principal(pygame.sprite.Sprite):
-    def _init_(self, groups, assets):
+    def __init__(self, groups, assets):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite._init_(self)
+        pygame.sprite.Sprite.__init__(self)
         self.state = STILL
         self.sprite = assets[WALK_PRINCIPAL]
         self.atual = 0
@@ -179,9 +179,9 @@ class Principal(pygame.sprite.Sprite):
 #classe pro tiro primário do personagem
 class Tiro_Principal(pygame.sprite.Sprite):
     # Construtor da classe.
-    def _init_(self, assets, principal):
+    def __init__(self, assets, principal):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite._init_(self)
+        pygame.sprite.Sprite.__init__(self)
 
         self.image = assets[IMG_TIRO_PRINCIPAL]
         self.mask = pygame.mask.from_surface(self.image)
@@ -204,9 +204,9 @@ class Tiro_Principal(pygame.sprite.Sprite):
 #classe para o especial do principal
 class Tiro_Especial(pygame.sprite.Sprite):
     # Construtor da classe.
-    def _init_(self, assets, principal):
+    def __init__(self, assets, principal):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite._init_(self)
+        pygame.sprite.Sprite.__init__(self)
 
         self.image = assets[IMG_TIRO_PRINCIPAL1]
         self.mask = pygame.mask.from_surface(self.image)
@@ -228,9 +228,9 @@ class Tiro_Especial(pygame.sprite.Sprite):
 
 #classe para o primeiro inimigo
 class Inimigo1(pygame.sprite.Sprite):
-    def _init_(self, groups, assets,principal):
+    def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite._init_(self)
+        pygame.sprite.Sprite.__init__(self)
         self.hit = False
         self.atual = 0
         self.sprite = assets[VOO_INIMIGO1]
@@ -320,9 +320,9 @@ class Inimigo1(pygame.sprite.Sprite):
 #classe para o tiro do inimigo
 class Tiro_inimigo(pygame.sprite.Sprite):
     # Construtor da classe.
-    def _init_(self, assets, principal,inimigo,groups):
+    def __init__(self, assets, principal,inimigo,groups):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite._init_(self)
+        pygame.sprite.Sprite.__init__(self)
         self.x = principal.rect.centerx
         self.y = principal.rect.centery
         self.image = assets[IMG_TIRO_INIMIGO]
@@ -357,9 +357,9 @@ class Tiro_inimigo(pygame.sprite.Sprite):
 
 #define classe do inimigo 2
 class Inimigo2(pygame.sprite.Sprite):
-    def _init_(self, groups, assets,principal):
+    def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite._init_(self)
+        pygame.sprite.Sprite.__init__(self)
         self.atual = 0
         self.sprite = assets[WALK_INIMIGO2]
         self.image = self.sprite[self.atual]
@@ -438,9 +438,9 @@ class Inimigo2(pygame.sprite.Sprite):
             self.atual= self.atual + 0.3
 #classe para o inimigo 3
 class Inimigo3(pygame.sprite.Sprite):
-    def _init_(self, groups, assets,principal):
+    def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite._init_(self)
+        pygame.sprite.Sprite.__init__(self)
 
         self.atual = 0
         self.sprite = assets[WALK_INIMIGO3]
@@ -494,12 +494,12 @@ class Inimigo3(pygame.sprite.Sprite):
             self.image = self.sprite[int(self.atual)]
             if self.principal.rect.centerx > self.rect.centerx:
                 self.direita = True
-                self.speedx = 4
+                self.speedx = 2
                 self.image = self.sprite[int(self.atual)]
 
             else:
                 self.direita = False
-                self.speedx = -4
+                self.speedx = -2
                 self.image = self.sprite[int(self.atual)]
                 self.image = pygame.transform.flip(self.image,True,False)
             self.rect.x += self.speedx
@@ -522,9 +522,9 @@ class Inimigo3(pygame.sprite.Sprite):
 
 #classe para o inimigo 4
 class Inimigo4(pygame.sprite.Sprite):
-    def _init_(self, groups, assets,principal):
+    def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite._init_(self)
+        pygame.sprite.Sprite.__init__(self)
 
         self.atual = 0
         self.sprite = assets[WALK_INIMIGO4]
@@ -573,11 +573,11 @@ class Inimigo4(pygame.sprite.Sprite):
             self.image = self.sprite[int(self.atual)]
             if self.principal.rect.centerx > self.rect.centerx:
                 self.direita = True
-                self.speedx = 3
+                self.speedx = 2
                 self.image = self.sprite[int(self.atual)]
             else:
                 self.direita = False
-                self.speedx = -3
+                self.speedx = -2
                 self.image = self.sprite[int(self.atual)]
                 self.image = pygame.transform.flip(self.image,True,False)
             self.text_surface = self.assets[SCORE_FONT].render(chr(9829) * self.lifes, True, (255,0,0))
@@ -601,9 +601,9 @@ class Inimigo4(pygame.sprite.Sprite):
             self.atual= self.atual + 0.3
 #classe do inimigo 5
 class Inimigo5(pygame.sprite.Sprite):
-    def _init_(self, groups, assets,principal):
+    def __init__(self, groups, assets,principal):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite._init_(self)
+        pygame.sprite.Sprite.__init__(self)
         self.atual = 0
         self.sprite = assets[WALK_INIMIGO5]
         self.image = self.sprite[self.atual]
