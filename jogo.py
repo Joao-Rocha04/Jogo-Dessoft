@@ -1,10 +1,11 @@
 # ===== Inicialização =====
 # ----- Importa e inicia pacotes
 import pygame
-from config import INIT, GAME, QUIT, CONFIG
+from config import INIT, GAME, QUIT, CONFIG, OVER
 from telainicial import init_screen
 from Principal import game_screen
 from telaconfig import config_screen
+from telagame_over import game_over_screen
 
 
 pygame.init()
@@ -22,6 +23,8 @@ while state != QUIT:
         state = game_screen(window)
     elif state == CONFIG:
         state = config_screen(window)
+    elif state == OVER:
+        state = game_over_screen(window)
     else:
         state = QUIT
 

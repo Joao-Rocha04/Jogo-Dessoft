@@ -44,3 +44,4 @@ INIT = 0
 GAME = 1
 QUIT = 2
 CONFIG = 3
+OVER = 4

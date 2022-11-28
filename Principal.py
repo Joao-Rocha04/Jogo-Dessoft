@@ -1,6 +1,7 @@
 import pygame
 from assets import load_assets,ANIM_ATAQUE_PRINCIPAL
 from sprites import Principal, Inimigo1, Inimigo2, Inimigo3, Inimigo4, Inimigo5
+from config import OVER
 import random
 
 # ----- Gera tela principal
@@ -99,7 +100,8 @@ def game_screen(window):
                 if player.lifes <= 0:
                     player.atual = 0
                     player.kill()
-                    game = False 
+                    state = OVER
+                    game = False
         now = pygame.time.get_ticks()
         hit_ticks = 1500
         hit_principal1 = pygame.sprite.spritecollide(player,all_inimigos,False,pygame.sprite.collide_mask)
@@ -113,6 +115,7 @@ def game_screen(window):
                     if player.lifes <= 0:
                         #player.morte= True
                         player.kill()
+                        state = OVER
                         game = False
         now1 = pygame.time.get_ticks()
         if now1 - last_hit1> hit_ticks1:
@@ -157,3 +160,4 @@ def game_screen(window):
         # ----- Gera saídas
         # ----- Atualiza estado do jogo
         pygame.display.update()  # Mostra o novo frame para o jogador
+    return state
