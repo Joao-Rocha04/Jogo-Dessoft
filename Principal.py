@@ -49,10 +49,8 @@ def game_screen(window):
                 keys_down[event.key] = True
                 if event.key == pygame.K_LEFT:
                     player.speedx -= 10
-                    ultima_tecla = True
                 if event.key == pygame.K_RIGHT:
                     player.speedx += 10
-                    ultima_tecla = False
                 if event.key == pygame.K_SPACE:
                     player.ataque = True
                     player.shoot()
