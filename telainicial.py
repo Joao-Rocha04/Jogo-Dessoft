@@ -1,6 +1,6 @@
 import pygame
 from os import path
-
+from assets import SOM_ENTRADA
 from config import IMG, preto, fps, GAME, QUIT, CONFIG
 
 
