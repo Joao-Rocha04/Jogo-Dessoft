@@ -103,7 +103,7 @@ def game_screen(window):
                     game = False 
         now = pygame.time.get_ticks()
         hit_ticks = 1500
-        hit_principal1 = pygame.sprite.spritecollide(player,all_inimigos,False)
+        hit_principal1 = pygame.sprite.spritecollide(player,all_inimigos,False,pygame.sprite.collide_mask)
         if now - last_hit> hit_ticks:
             last_hit = now
             if len(hit_principal1)>0:
