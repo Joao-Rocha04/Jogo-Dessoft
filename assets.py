@@ -172,6 +172,7 @@ def load_assets():
     assets[ATAQUE_INI3] = ataque3
     assets[SOM_ADAGA]=pygame.mixer.Sound(os.path.join(SND,'dagger_drawn2-89025.mp3'))
     assets[SOM_ESPECIAL]=pygame.mixer.Sound(os.path.join(SND,'sword-hit-7160.mp3'))
+    assets[SOM_ESPECIAL]=pygame.mixer.Sound(os.path.join(SND,'field_theme_1.wav'))
     
 
     return assets
