@@ -10,6 +10,7 @@ def config_screen(screen):
 
     # Carrega o fundo da tela inicial
     background = pygame.image.load(path.join(IMG, 'config.jpg')).convert()
+    background = pygame.transform.scale(background,(1000,600))
     background_rect = background.get_rect()
 
     running = True
