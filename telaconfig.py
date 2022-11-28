@@ -1,15 +1,15 @@
 import pygame
 from os import path
 
-from config import IMG, preto, fps, GAME, QUIT, CONFIG
+from config import IMG, preto, fps, GAME, QUIT, CONFIG, INIT
 
 
-def init_screen(screen):
+def config_screen(screen):
     # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
 
     # Carrega o fundo da tela inicial
-    background = pygame.image.load(path.join(IMG, 'inicio.jpg')).convert()
+    background = pygame.image.load(path.join(IMG, 'config.jpg')).convert()
     background_rect = background.get_rect()
 
     running = True
@@ -25,13 +25,14 @@ def init_screen(screen):
                 state = QUIT
                 running = False
 
-            if event.type == pygame.K_SPACE:
-                state = GAME
-                running = False
+            if event.type == pygame.KEYDOWN:
+
+
+                if event.key == pygame.K_ESCAPE:
+                    state = INIT
+                    running = False
             
-            if event.type==pygame.K_w:
-                state = CONFIG
-                running = False
+            
 
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(preto)

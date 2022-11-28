@@ -24,14 +24,17 @@ def init_screen(screen):
             if event.type == pygame.QUIT:
                 state = QUIT
                 running = False
-
-            if event.type == pygame.K_SPACE:
-                state = GAME
-                running = False
             
-            if event.type==pygame.K_w:
-                state = CONFIG
-                running = False
+            if event.type == pygame.KEYDOWN:
+                
+
+                if event.key == pygame.K_SPACE:
+                    state = GAME
+                    running = False
+                
+                if event.key ==pygame.K_w:
+                    state = CONFIG
+                    running = False
 
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(preto)
