@@ -39,10 +39,11 @@ def game_screen(window):
     font = pygame.font.SysFont(None, 48)
     hit_ticks1 = 2000
     inimigo1 = None
+    pygame.mixer.music.play(loops=-1)
+    pygame.mixer.music.set_volume(0.15)
     # ===== Loop principal =====
     while game:
         clock.tick(30)
-        assets[SOM_JOGO].play
         # ----- Trata eventos
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -122,7 +123,7 @@ def game_screen(window):
                         game = False
         now1 = pygame.time.get_ticks()
         if now1 - last_hit1> hit_ticks1:
-            hit_ticks1-=20
+            hit_ticks1-=35
             last_hit1 = now1
             i = random.randint(1,5)
             if i == 1 and tem_inimigo1 == False:

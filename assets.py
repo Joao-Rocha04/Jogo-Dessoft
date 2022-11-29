@@ -36,6 +36,7 @@ SOM_ADAGA='som_adaga'
 SOM_ESPECIAL="som_especial"
 SOM_ENTRADA = 'som_entrada'
 SOM_JOGO = 'som_jogo'
+SOM_GAME_OVER = 'som_game_over'
 #funções para importar imagens e animações
 def load_image(filename):
     return pygame.image.load(os.path.join(IMG, *filename))
@@ -173,8 +174,9 @@ def load_assets():
         ataque3.append(img)
     assets[ATAQUE_INI3] = ataque3
     assets[SOM_ADAGA]=pygame.mixer.Sound(os.path.join(SND,'dagger_drawn2-89025.mp3'))
-    assets[SOM_ESPECIAL]=pygame.mixer.Sound(os.path.join(SND,'sword-hit-7160.mp3'))
+    assets[SOM_ESPECIAL]=pygame.mixer.Sound(os.path.join(SND,'632336__igroglaz__magic-spell-06.wav'))
     assets[SOM_ENTRADA]=pygame.mixer.Sound(os.path.join(SND,'field_theme_1.wav'))
-    assets[SOM_JOGO]=pygame.mixer.Sound(os.path.join(SND,'night_theme_2.wav'))
+    pygame.mixer.music.load(os.path.join(SND,'night_theme_2.wav'))
+    assets[SOM_GAME_OVER]=pygame.mixer.Sound(os.path.join(SND,'Game_Over_2.wav'))
 
     return assets

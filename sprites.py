@@ -594,7 +594,7 @@ class Inimigo4(pygame.sprite.Sprite):
         # Verifica quantos ticks se passaram desde o último tiro.
             elapsed_ticks = now - self.last_shot
             # Se já pode atirar novamente...
-            if elapsed_ticks > self.shoot_ticks and -40 <= aaa <=40:
+            if elapsed_ticks > self.shoot_ticks and -30 <= aaa <=30:
             # Marca o tick da nova imagem.
                 self.last_shot = now
                 self.ataque = True
@@ -672,7 +672,7 @@ class Inimigo5(pygame.sprite.Sprite):
         # Verifica quantos ticks se passaram desde o último tiro.
             elapsed_ticks = now - self.last_shot
             # Se já pode atirar novamente...
-            if elapsed_ticks > self.shoot_ticks and -40 <= aaa <=40:
+            if elapsed_ticks > self.shoot_ticks and -30 <= aaa <=30:
             # Marca o tick da nova imagem.
                 self.last_shot = now
                 self.ataque = True
