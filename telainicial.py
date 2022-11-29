@@ -15,6 +15,7 @@ def init_screen(screen):
     background_rect = background.get_rect()
     assets=load_assets()
     running = True
+    #toca o som de fundo e deixa em loop
     assets[SOM_ENTRADA].play(-1)
     while running:
         # Ajusta a velocidade do jogo.
@@ -33,11 +34,13 @@ def init_screen(screen):
 
                 if event.key == pygame.K_SPACE:
                     state = GAME
+                    #Para o som caso troque a janela
                     pygame.mixer.Sound.stop(assets[SOM_ENTRADA])
                     running = False
                 
                 if event.key ==pygame.K_w:
                     state = CONFIG
+                    #Para o som caso troca a janela
                     pygame.mixer.Sound.stop(assets[SOM_ENTRADA])
                     running = False
 

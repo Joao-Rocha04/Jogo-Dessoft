@@ -1,9 +1,8 @@
 import pygame
-from assets import load_assets,ANIM_ATAQUE_PRINCIPAL,SOM_ADAGA,SOM_ESPECIAL,SOM_JOGO
+from assets import load_assets,ANIM_ATAQUE_PRINCIPAL,SOM_ADAGA,SOM_ESPECIAL
 from sprites import Principal, Inimigo1, Inimigo2, Inimigo3, Inimigo4, Inimigo5
 from config import OVER
 import random
-
 # ----- Gera tela principal
 def game_screen(window):
     clock=pygame.time.Clock()
@@ -123,7 +122,8 @@ def game_screen(window):
                         game = False
         now1 = pygame.time.get_ticks()
         if now1 - last_hit1> hit_ticks1:
-            hit_ticks1-=35
+            if score%500 == 0:
+                hit_ticks1-=50
             last_hit1 = now1
             i = random.randint(1,5)
             if i == 1 and tem_inimigo1 == False:
@@ -151,6 +151,7 @@ def game_screen(window):
         for inimigo in hits1:
             if inimigo == inimigo1:
                 tem_inimigo1 = False
+            score+=100
             inimigo.kill()
         all_personagens.add(all_inimigos)
         all_sprites.update()

@@ -173,6 +173,7 @@ def load_assets():
         img = pygame.transform.scale(img,(largura_inimigo3,altura_inimigo3))
         ataque3.append(img)
     assets[ATAQUE_INI3] = ataque3
+    #Importa os sons do jogo
     assets[SOM_ADAGA]=pygame.mixer.Sound(os.path.join(SND,'dagger_drawn2-89025.mp3'))
     assets[SOM_ESPECIAL]=pygame.mixer.Sound(os.path.join(SND,'632336__igroglaz__magic-spell-06.wav'))
     assets[SOM_ENTRADA]=pygame.mixer.Sound(os.path.join(SND,'field_theme_1.wav'))
