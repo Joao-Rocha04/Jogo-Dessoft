@@ -1,5 +1,5 @@
 import pygame
-from assets import load_assets,ANIM_ATAQUE_PRINCIPAL,SOM_ADAGA,SOM_ESPECIAL
+from assets import load_assets,ANIM_ATAQUE_PRINCIPAL,SOM_ADAGA,SOM_ESPECIAL,CORRIDA,WALK_PRINCIPAL
 from sprites import Principal, Inimigo1, Inimigo2, Inimigo3, Inimigo4, Inimigo5
 from config import OVER
 import random
@@ -40,6 +40,7 @@ def game_screen(window):
     inimigo1 = None
     pygame.mixer.music.play(loops=-1)
     pygame.mixer.music.set_volume(0.15)
+    assets[CORRIDA].play(-1)
     # ===== Loop principal =====
     while game:
         clock.tick(30)
@@ -78,6 +79,10 @@ def game_screen(window):
                     if event.key == pygame.K_RIGHT:
                         player.speedx -= 10
         # ----- Atualiza estado do jogo
+        if player.speedx == 0:
+            assets[CORRIDA].set_volume(0.0)
+        else:
+            assets[CORRIDA].set_volume(0.6)
         if ult!= 100:
             text = font.render(f'ESPECIAL = {ult}%', True, (0, 0, 0))
         if ult == 100:
@@ -104,6 +109,7 @@ def game_screen(window):
                     player.atual = 0
                     player.kill()
                     state = OVER
+                    assets[CORRIDA].set_volume(0.0)
                     game = False
         now = pygame.time.get_ticks()
         hit_ticks = 1500
@@ -119,6 +125,7 @@ def game_screen(window):
                         #player.morte= True
                         player.kill()
                         state = OVER
+                        assets[CORRIDA].set_volume(0.0)
                         game = False
         now1 = pygame.time.get_ticks()
         if now1 - last_hit1> hit_ticks1:
