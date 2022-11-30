@@ -113,7 +113,7 @@ def game_screen(window):
                     game = False
         now = pygame.time.get_ticks()
         hit_ticks = 1500
-        hit_principal1 = pygame.sprite.spritecollide(player,all_inimigos,False,pygame.sprite.collide_mask)
+        hit_principal1 = pygame.sprite.spritecollide(player,all_inimigos,False)
         if now - last_hit> hit_ticks:
             last_hit = now
             if len(hit_principal1)>0:
@@ -172,4 +172,6 @@ def game_screen(window):
         # ----- Gera saídas
         # ----- Atualiza estado do jogo
         pygame.display.update()  # Mostra o novo frame para o jogador
+    with open('score.py','w') as arquivo:
+        arquivo.write(str(score))
     return state

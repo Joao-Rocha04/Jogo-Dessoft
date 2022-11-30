@@ -12,7 +12,10 @@ def game_over_screen(screen):
     background_rect = background.get_rect()
     assets[SOM_GAME_OVER].play()
     running = True
-    font = pygame.font.SysFont(None, 30)
+    font = pygame.font.SysFont(None, 48)
+    with open('score.py','r') as arquivo:
+        score = arquivo.read()
+    text = font.render(f'Você fez {int(score)} pontos!', True, (255, 255, 0))
     while running:
         # Ajusta a velocidade do jogo.
         clock.tick(fps)
@@ -31,6 +34,7 @@ def game_over_screen(screen):
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(preto)
         screen.blit(background, background_rect)
+        screen.blit(text,(330,400))
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
 

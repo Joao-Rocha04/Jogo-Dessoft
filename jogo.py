@@ -13,7 +13,7 @@ pygame.mixer.init()
 
 # ----- Gera tela principal
 window = pygame.display.set_mode((1000, 600))
-pygame.display.set_caption('Navinha')
+pygame.display.set_caption('Barbara s Adventure')
 
 state = INIT
 while state != QUIT:
