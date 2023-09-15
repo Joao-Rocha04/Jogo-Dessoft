@@ -1,41 +1,20 @@
+from utilidade_tela import tela_generica
+from assets import SOM_GAME_OVER
+from config import IMG, QUIT, INIT
 import pygame
-from os import path
-from assets import load_assets,SOM_GAME_OVER
-from config import IMG, preto, fps,QUIT,INIT
-def game_over_screen(screen):
-    # Variável para o ajuste de velocidade
-    clock = pygame.time.Clock()
-    assets = load_assets()
-    # Carrega o fundo da tela inicial
-    background = pygame.image.load(path.join(IMG, 'Game_over.png')).convert()
-    background = pygame.transform.scale(background,(1000,600))
-    background_rect = background.get_rect()
-    assets[SOM_GAME_OVER].play()
-    running = True
-    font = pygame.font.SysFont(None, 48)
-    with open('score.py','r') as arquivo:
-        score = arquivo.read()
-    text = font.render(f'Você fez {int(score)} pontos!', True, (255, 255, 0))
-    while running:
-        # Ajusta a velocidade do jogo.
-        clock.tick(fps)
-        # Processa os eventos (mouse, teclado, botão, etc).
-        for event in pygame.event.get():
-            # Verifica se foi fechado.
-            if event.type == pygame.QUIT:
-                state = QUIT
-                running = False
-            
-            if event.type == pygame.KEYDOWN:
-                
-                if event.key == pygame.K_ESCAPE:
-                    state = INIT
-                    running = False
-        # A cada loop, redesenha o fundo e os sprites
-        screen.fill(preto)
-        screen.blit(background, background_rect)
-        screen.blit(text,(330,400))
-        # Depois de desenhar tudo, inverte o display.
-        pygame.display.flip()
 
-    return state
+def game_over_screen(tela):
+    font = pygame.font.SysFont(None, 48)
+    with open('score.py', 'r') as arquivo:
+        score = arquivo.read()
+
+    text = font.render(f'Você fez {int(score)} pontos!', True, (255, 255, 0))
+
+    def additional_draws(s):
+        s.blit(text, (330, 400))
+
+    key_actions = {
+        pygame.K_ESCAPE: INIT
+    }
+
+    return tela_generica(tela, 'Game_over.png', SOM_GAME_OVER, key_actions, additional_draws)
