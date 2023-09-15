@@ -3,6 +3,8 @@ from assets import SOM_ENTRADA
 from config import IMG, GAME, QUIT, CONFIG
 import pygame
 
+
+
 def init_screen(tela):
     def additional_draws(s):
         pass
