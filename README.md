@@ -2,7 +2,7 @@
 Barbara's Adventure
 
 -João Vitor Rocha
--Leonardo Ponsiano
+-Roberta Barros Teixeira Pereira
 -Marcos Paulo
 
 Primeiramente, para rodar nosso jogo se deve baixar o pygame. Para isso, você deve procurar em sua barra de busca no windows o Anaconda Prompt, nele, você deve digitar pip install pygame, após seu dowload ser confirmado, você pode abrir nosso jogo em sua IDE de preferência e se preparar para o desafio!!
