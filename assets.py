@@ -2,6 +2,8 @@
 import pygame
 import os
 from config import SND,largura,altura,FNT,IMG, largura_inimigo1,altura_inimigo1,largura_inimigo2,altura_inimigo2,largura_inimigo3,altura_inimigo3,largura_inimigo4,altura_inimigo4,largura_inimigo5,altura_inimigo5,largura_principal,altura_principal
+from som import SOM
+
 
 #itens do dicionário
 IMG_ENEMY1 = 'img_enemy1'
@@ -174,13 +176,13 @@ def load_assets():
         img = pygame.transform.scale(img,(largura_inimigo3,altura_inimigo3))
         ataque3.append(img)
     assets[ATAQUE_INI3] = ataque3
+
     #Importa os sons do jogo
-    assets[SOM_ADAGA]=pygame.mixer.Sound(os.path.join(SND,'dagger_drawn2-89025.mp3'))
-    assets[SOM_ADAGA].set_volume(0.1)
-    assets[SOM_ESPECIAL]=pygame.mixer.Sound(os.path.join(SND,'632336__igroglaz__magic-spell-06.wav'))
-    assets[SOM_ESPECIAL].set_volume(0.3)
-    assets[SOM_ENTRADA]=pygame.mixer.Sound(os.path.join(SND,'field_theme_1.wav'))
+
+    assets[SOM_ADAGA] = SOM.play_sound('adaga', volume=0.1)
+    assets[SOM_ESPECIAL] = SOM.play_sound('especial', volume=0.1)
+    assets[SOM_ENTRADA] = SOM.play_sound('entrada', volume=0.1)
     pygame.mixer.music.load(os.path.join(SND,'night_theme_2.wav'))
-    assets[SOM_GAME_OVER]=pygame.mixer.Sound(os.path.join(SND,'Game_Over_2.wav'))
-    assets[CORRIDA] = pygame.mixer.Sound(os.path.join(SND,'Running Footsteps - Sound Effect.mp3'))
+    assets[SOM_GAME_OVER] = SOM.play_sound('game-over', volume=0.1)
+    assets[CORRIDA] = SOM.play_sound('corrida', volume=0.1)
     return assets
